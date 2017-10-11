@@ -6,7 +6,7 @@ deployment:
   staging:
     branch: master
     heroku: 
-      appname: posgrado-eci
+      appname: ralph-windows
 
 test:
   post:

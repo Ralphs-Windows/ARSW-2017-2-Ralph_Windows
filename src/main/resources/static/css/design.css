@@ -8,10 +8,10 @@ and open the template in the editor.
 #ti{width:100%; height:80%}
 #ti{background-color: #50a3a2;}
 
+
 #imagenFondo{
     text-align-last: right;
 }
-
 
 /*titulo pagina*/
 h1{
@@ -19,22 +19,8 @@ h1{
     color: white;
     font-family:cursive;
 }
-button{
-    background-color: black;
-    color: white;
-    border-radius: 100px;
-    padding: 10px 10px;
-    font-size: 20px;
-    text-align-last: center;
-    
-}
 
-button:hover{
-    background-color: #B40404; 
-    color: white;
-    box-shadow: 0 20px 20px 0 rgba(0,0,0,0.24), 0 20px 20px 0 rgba(0,0,0,0.19);
-}
-
+/*barra de menu*/
 ul {
     list-style-type: none;
     margin: 0;
@@ -62,9 +48,7 @@ li a:hover:not(.active) {
     background-color:#B40404 ;
 }
 
-
-
-
+/*recuadro de ingresar*/
 
 * {
   box-sizing: border-box;
@@ -130,7 +114,7 @@ form input:focus {
   width: 300px;
   color: #53e3a6;
 }
-form button {
+#login-button {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -143,8 +127,7 @@ form button {
   width: 250px;
   cursor: pointer;
   font-size: 18px;
-  -webkit-transition-duration: 0.25s;
-          transition-duration: 0.25s;
+  
 }
 form button:hover {
   background-color: #f5f7f9;

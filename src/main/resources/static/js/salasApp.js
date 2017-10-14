@@ -12,38 +12,40 @@ salasApp = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stomp');
         stompClient = Stomp.over(socket);
-        
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe("", function (data) {
             });
             stompClient.subscribe("", function (data) {
-                
+
             });
             stompClient.subscribe("", function (data) {
-                
+
             });
         });
-        
     };
-    
     return {
-        connectSala:function (){
+        connectSala: function () {
             connectAndSubscribe();
         },
-        saveName:function (){
-            name = $('#usuario').val();
-        },
-        disconnectSala:function (){
-            
+
+        disconnectSala: function () {
+
         }
     };
-        
+    
+
 })();
-$(document).ready(function(){
-    $("#login-button").click(function (){
-        salasApp.saveName();
-    });
-   
-});
+saveName = function () {
+    alert("clic ");
+        open("menu.html", "_self");
+        // name = $('#usuario').val();
+    };
+//$(document).ready(function () {
+//     $("#login-button").click(function () {
+//       salasApp.saveName();
+// });
+// });
+
+
 

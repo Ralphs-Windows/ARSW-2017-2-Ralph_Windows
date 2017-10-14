@@ -15,21 +15,29 @@ and open the template in the editor.
 
     <body >
         <div id="ti">
-            <h1 id="titulo"><em>RALPH WINDOW'S</em></h1>
+            <h1 id="titulo">RALPH WINDOW'S</h1>
         </div>       
-        <br>
-        <div>
-        Nombre:<br>
-        <input id="nombre" type="text" name="Nombre">
+
+        <div class="wrapper">
+            <div class="container">
+                <h1>Bienvenido al juego</h1>
+                <br>
+                <br>
+                <form class="form">
+                    <input type="text" placeholder="Nombre">
+                    <!--<input type="password" placeholder="Clave">-->
+                    <br>
+                    <button type="submit" id="login-button" onclick="">Ingresar</button>
+                </form>
+            </div>
+        </div>
+        <div id="imagenFondo">
+        <img  src="imagen/fondoinicial.jpg" height="590" width="800" />
         </div>
         <br>
 
 
         <!--<img  src="../imagenes/fondoinicial.jpg"  />-->
 
-
-        <div >
-            <button id="ingresar" style="text-align: right" onclick=""><b>Ingresar</b></button>
-        </div>
     </body>
 </html>

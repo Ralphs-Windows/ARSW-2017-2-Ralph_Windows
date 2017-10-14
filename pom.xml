@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>RalphWindows</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Ralph Windows</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -35,6 +35,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	 <dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-websocket</artifactId>
+	  <version>4.3.3.RELEASE</version>
+	  <type>jar</type>
+	 </dependency>
+	 <dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-messaging</artifactId>
+	  <version>4.3.3.RELEASE</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>

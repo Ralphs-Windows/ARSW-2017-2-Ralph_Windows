@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+
+/*fondo titulo pagina-raya*/
+#ti{width:100%; height:40%}
+#ti{background-color: lightblue;}
+
+#imagenFondo{
+    width:100px;
+    height:100px;
+    background: url(main/resources/imagenes/fondoinicial.jpg);
+}
+
+
+/*titulo pagina*/
+h1{
+    text-align-last: center;
+    color: darkviolet;
+    font-family: cursive;
+}
+button{
+    background-color: hotpink;
+    color: white;
+    border-radius: 100px;
+    padding: 10px 10px;
+    font-size: 20px;
+    text-align-last: center;
+    
+}
+
+button:hover{
+    background-color: chartreuse; /* Green */
+    color: white;
+    box-shadow: 0 20px 20px 0 rgba(0,0,0,0.24), 0 20px 20px 0 rgba(0,0,0,0.19);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #F5A9A9;
+}
+
+li {
+    float: left;
+    border-right:1px solid white;
+}
+
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: cursive;
+}
+
+li a:hover:not(.active) {
+    background-color: #0101DF;
+}
+
+
+
+

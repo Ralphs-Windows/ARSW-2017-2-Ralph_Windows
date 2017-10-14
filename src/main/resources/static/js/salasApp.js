@@ -28,6 +28,9 @@ salasApp = (function () {
         connectSala: function () {
             connectAndSubscribe();
         },
+        saveName: function (){
+            name = $('#usuario').val();
+        },
 
         disconnectSala: function () {
 
@@ -36,16 +39,11 @@ salasApp = (function () {
     
 
 })();
-saveName = function () {
-    alert("clic ");
-        open("menu.html", "_self");
-        // name = $('#usuario').val();
-    };
-//$(document).ready(function () {
-//     $("#login-button").click(function () {
-//       salasApp.saveName();
-// });
-// });
+$(document).ready(function () {
+     $("#login-button").click(function () {
+       salasApp.saveName();
+ });
+});
 
 
 

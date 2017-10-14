@@ -8,15 +8,29 @@ and open the template in the editor.
 #ti{width:100%; height:80%}
 #ti{background-color: #50a3a2;}
 
-
 #imagenFondo{
     text-align-last: right;
 }
-
+#movim{
+    text-align: center;
+}
+#imagenmenu{
+    text-align: center;
+}
+#nombreJug{
+    text-align-last: left;
+    color: #B40404;
+    font-family:cursive;
+}
 /*titulo pagina*/
 h1{
     text-align-last: center;
     color: white;
+    font-family:cursive;
+}
+#subtitulo{
+    text-align-last: center;
+    color: #B40404;
     font-family:cursive;
 }
 
@@ -33,8 +47,9 @@ li {
     float: left;
     border-right:1px solid white;
 }
-
-
+li:last-child {
+    border-left: 1px solid white;
+}
 li a {
     display: block;
     color: white;

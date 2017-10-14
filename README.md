@@ -11,5 +11,5 @@ Se sabe qué equipo Félix fue el ganador dependiendo de la cantidad de ventanas
 ## Enlaces:
 * Repositorio GIT: https://github.com/Ralphs-Windows/RalphsWindows
 * Proyecto CircleCI: https://circleci.com/gh/Ralphs-Windows
-* URL aplicacion heroku: https://dashboard.heroku.com/apps/ralphwindows
+* URL aplicacion heroku: https://ralphwindows.herokuapp.com/
 * URL Codacy: https://www.codacy.com/app/LauraMilenaRB/ARSW-2017-2-Ralph_Windows/dashboard

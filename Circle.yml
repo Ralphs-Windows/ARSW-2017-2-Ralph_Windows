@@ -6,7 +6,7 @@ deployment:
   staging:
     branch: master
     heroku: 
-      appname: ralph-windows
+      appname: ralphwindows
 
 test:
   post:

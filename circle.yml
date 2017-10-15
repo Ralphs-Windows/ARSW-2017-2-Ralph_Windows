@@ -7,7 +7,6 @@ deployment:
     branch: master
     heroku: 
       appname: ralphwindows
-
 test:
   post:
     - mvn site

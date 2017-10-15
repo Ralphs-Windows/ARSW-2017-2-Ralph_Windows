@@ -8,12 +8,15 @@ and open the template in the editor.
     <head>
         <title>Ralph Windows</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
-
-        <script src="js/salasApp.js"></script>  
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />  
         <link rel="stylesheet" href="/css/design.css" />
-        <link rel="stylesheet" href="css/design.css" type="text/css">       
-
+        <link rel="stylesheet" href="css/design.css" type="text/css">
+        <script src="js/apimock.js"></script>
+        <script src="js/salasApp.js"></script>
     </head>
 
     <body >
@@ -30,8 +33,7 @@ and open the template in the editor.
                     <input type="text"  id="usuario" placeholder="Nombre">
                     <!--<input type="password" placeholder="Clave">-->
                     <br>
-                    <!--<button  id="login-button" onclick="saveName()" class="button">Ingresar</button>-->
-                    <a href="menu.html"  target="_self"> <input type="button" name="boton" value="Ingresar" /> </a> 
+                    <a href="menu.html"  target="_self"> <input type="button" id="login-button" name="boton" value="Ingresar" /> </a> 
                 </form>
             </div>
         </div>

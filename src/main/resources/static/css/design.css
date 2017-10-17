@@ -3,13 +3,42 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-
+#barra{
+    color: #ffffff;
+    background-color: #66ccff;
+    background-size: cover;
+    font: bold 14px cursive, sans-serif;
+    height: 1.5cm;  
+    width: 100%;
+    left: -5px;
+    top: 0px;
+    text-align: center;
+    position:relative;
+    
+}
+footer {
+  position:relative;
+  right: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #66ccff;
+  color: #000000;
+  text-align: center;
+  height: 3cm; 
+  width: 100%;
+  left: -5px;
+  bottom: -5px;
+  font: 14px cursive, sans-serif !important;
+}
 /*fondo titulo pagina-raya*/
-#ti{width:100%; height:80%}
-#ti{background-color: #50a3a2;}
 
+body {
+    text-align: center;
+}
 #imagenFondo{
-    text-align-last: right;
+    height:80% ;
+    width:45%;
+    
 }
 #movim{
     text-align: center;
@@ -22,27 +51,12 @@ and open the template in the editor.
     color: #B40404;
     font-family:cursive;
 }
-/*titulo pagina*/
-h1{
-    text-align-last: center;
-    color: white;
-    font-family:cursive;
-}
+
 #subtitulo{
     text-align-last: center;
     color: #B40404;
     font-family:cursive;
 }
-
-/*barra de menu*/
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: red;
-}
-
 li {
     float: left;
     border-right:1px solid white;
@@ -52,7 +66,7 @@ li:last-child {
 }
 li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -67,7 +81,7 @@ li a:hover:not(.active) {
 
 * {
   box-sizing: border-box;
-  margin: 0;
+  margin: 5px;
   padding: 0;
   font-weight: 300;
 }
@@ -80,17 +94,17 @@ body ::-webkit-input-placeholder {
 }
 
 .wrapper {
-  background: red;
-  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+  background: -webkit-linear-gradient(top left, #e6f7ff 0%,  #1ab2ff 100%);
+  background: linear-gradient(to bottom right, #e6f7ff 0%,  #1ab2ff 100%);
   position: absolute;
   top: 50%;
-  left: 0;
+  left: 8%;
   width: 38%;
   height: 400px;
   margin-top: -200px;
   overflow: hidden;
   text-align-last: center;
+  font: bold 14px cursive, sans-serif;
 }
 
 .container {
@@ -100,8 +114,11 @@ body ::-webkit-input-placeholder {
   height: 400px;
   text-align: center;
 }
-
-
+/*barra de menu*/
+.navbar-default{
+    background: #66ccff;
+    
+}
 form input {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -137,7 +154,7 @@ form input:focus {
   background-color: white;
   border: 0;
   padding: 10px 15px;
-  color: #53e3a6;
+  color: black;
   border-radius: 3px;
   width: 250px;
   cursor: pointer;

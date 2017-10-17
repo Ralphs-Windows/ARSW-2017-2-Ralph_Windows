@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global connectAndSubscribe*/
+/* global connectAndSubscribe, Stomp*/
 
 var salasApp = (function () {
-    var nameuser = null;
+    var nameuser = "hola";
+    var idroom=null;
     var stompClient = null;
+    var suscriberoom=null;
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS("/stompendpoint");
@@ -16,29 +18,44 @@ var salasApp = (function () {
             console.log('Connected: ' + frame);
             stompClient.subscribe("/topic/rooms", function (data) {
                 var val=JSON.parse(data.body);
-                var idsala= val.map(function (id){
-                    return "<tr><td>" + id+ "</td></tr>";
+                var idsala= val.map(function (sala){
+                    return "<tr><td>" + sala+ "</td>\n\
+                            <td><button type='button' onclick=salasApp.connectSala('"+sala+"')>Unirse</td></tr>";
                 });
-                $("#imagenmenu").append("<table>\n\
-                                            <thead>\n\
-                                                <tr>\n\
-                                                    <th>Identificador de sala</th>\n\
-                                                </tr>\n\
-                                            </thead>\n\
-                                            <tbody>"+idsala+"</tbody>\n\
-                                        </table>");
+                $("#menutable table tbody tr").remove();
+                $("#menutable table tbody").append(idsala);
                 
             });
-            stompClient.subscribe("/topic/room."+"", function (data) {
-
+            suscriberoom=stompClient.subscribe("/topic/room."+idroom, function (data) {
+                var val=JSON.parse(data.body);
+                var idsala= val.map(function (usuario){
+                    return "<tr><td>" + usuario+ "</td></tr>";
+                });
+                $("#menutable2 table tbody tr").remove();
+                $("#menutable2 table tbody").append(idsala);
             });
             stompClient.subscribe("", function (data) {
 
             });
+            stompClient.send("/app/rooms");
         });
+        
     };
+    
+            
     return {
-        connectSala: function () {
+        connectSala: function (room) {
+           if(idroom!==null){
+                if(idroom!==room){
+                    $("menutable2 table tbody tr").remove();
+                    suscriberoom.unsubscribe(room);
+                    idroom=room;
+                }
+            }else{
+                idroom=room;
+                connectAndSubscribe().then(stompClient.send("/app/room."+idroom, {}, JSON.stringify(nameuser)));
+                
+            }
         },
         saveName: function (){
             nameuser = $('#usuario').val();
@@ -47,7 +64,13 @@ var salasApp = (function () {
             connectAndSubscribe();
         },
         disconnectSala: function () {
-            stompClient.send("/app/rooms");
+            stompClient.send("/app/room."+idroom, {}, JSON.stringify(nameuser));
+        },
+        disconnect: function () {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+                console.log("Disconnected");
+            }
         }
     };
 })();

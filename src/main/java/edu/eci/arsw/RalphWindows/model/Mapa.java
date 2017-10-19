@@ -5,8 +5,7 @@
  */
 package edu.eci.arsw.RalphWindows.model;
 
-import java.util.Arrays;
-import javafx.util.Pair;
+
 
 /**
  *

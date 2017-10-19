@@ -5,13 +5,48 @@
  */
 package edu.eci.arsw.RalphWindows.model;
 
+import java.util.concurrent.ConcurrentLinkedDeque;
+
 /**
  *
  * @author laura
  */
 public class SalaJuego {
-    public SalaJuego(int puntos) {
-        
+    private String id;
+    private ConcurrentLinkedDeque<Jugador> equipo1;
+    private ConcurrentLinkedDeque<Jugador> equipo2;
+    
+    public SalaJuego(String id,ConcurrentLinkedDeque<Jugador> eq1,ConcurrentLinkedDeque<Jugador> eq2) {
+        equipo1=eq1;
+        equipo2=eq2;
     };
-    public SalaJuego(){}
+    public SalaJuego(){
+        equipo1=new ConcurrentLinkedDeque<>();
+        equipo2=new ConcurrentLinkedDeque<>();
+    };
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ConcurrentLinkedDeque<Jugador> getEquipo1() {
+        return equipo1;
+    }
+
+    public void setEquipo1(ConcurrentLinkedDeque<Jugador> equipo1) {
+        this.equipo1 = equipo1;
+    }
+
+    public ConcurrentLinkedDeque<Jugador> getEquipo2() {
+        return equipo2;
+    }
+
+    public void setEquipo2(ConcurrentLinkedDeque<Jugador> equipo2) {
+        this.equipo2 = equipo2;
+    }
+
 }

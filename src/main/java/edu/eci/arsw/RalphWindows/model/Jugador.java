@@ -20,6 +20,8 @@ public class Jugador {
     public String getNombreuser() {
         return nombreuser;
     }
-    
+    public void setNombreUser(String nombre){
+        nombreuser=nombre;
+    }
     
 }

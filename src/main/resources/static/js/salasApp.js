@@ -5,7 +5,7 @@
  */
 /* global connectAndSubscribe, Stomp*/
 
-var salasApp = (function () {
+salasApp = (function () {
     var nameuser = "hola";
     var idroom=null;
     var stompClient = null;

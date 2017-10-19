@@ -16,24 +16,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/design.css" />
         <link rel="stylesheet" href="css/design.css" type="text/css"> 
-        <script src="js/apimock.js"></script>
-        <script src="js/salasApp.js"></script>
+        <script src="js/apiclient.js"></script>
+        <script src="js/juegoApp.js"></script>
     </head>
-    <body >
-        <img  src="img/captura.png" style="text-align: center;  width: 20%" />
-        <nav class="navbar navbar-default" role="navigation">
-            <ul class="nav navbar-nav">
-                <li id="Name"></li>           
-                <li></li> 
-            </ul>
-        </nav>
-        <br>
-        <br>
-        <br>
-        <div id="subtitulo">
-            <h2>CREAR SALA DE JUEGO</h2>        
+    <body onload="juegoApp.init()" style="background-color: black;">
+        <div style="background:url('img/FondoPartida.jpg');position: absolute;left:27%;width: 45%;height: 910px;text-align: center">
+            <canvas height="900px" width="350px" id="micanvas" style="border:1px solid #B40404;position: absolute;right: 35%"></canvas>
         </div>
-        <br>
-        <br>
     </body>
 </html>

@@ -5,23 +5,45 @@
  */
 package edu.eci.arsw.RalphWindows.persistence;
 
+import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Tuple;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author laura
  */
 public interface RalphWindowsPersistence {
+
     /**
      * Retorna una tupla con los estados inciales d ela ventanas
-     * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
-     **/
+     *
+     * @return
+     * @throws
+     * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     *
+     */
     public Tuple[][] getMapajuego() throws RalphWindowsPersistenceException;
-    
-    /**Retorna las Salas de juego disponibles donde aun no hay 4 jugadores
-     * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException**/
+
+    /**
+     * Retorna las Salas de juego disponibles donde aun no hay 4 jugadores
+     *
+     * @return
+     * @throws
+     * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException*
+     */
     public ArrayList getSalasJuegoDisponibles() throws RalphWindowsPersistenceException;
+
+    public List<Jugador> getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException;
+
+    public List<Jugador> getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException;
+
+    public void registrarJugadorEquipoFelix1(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
+
+    public void registrarJugadorEquipoFelix2(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
+
+    public int getSalaDisponible() throws RalphWindowsPersistenceException;
+
+    public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException;
 }

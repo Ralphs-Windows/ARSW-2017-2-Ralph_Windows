@@ -10,18 +10,20 @@ package edu.eci.arsw.RalphWindows.model;
  * @author laura
  */
 public class Jugador {
-    String nombreuser;
+    String username;
     
     public Jugador(String nombre){
-        this.nombreuser=nombre;
+        this.username=nombre;
     }
-    public Jugador(){}
+    public Jugador(){
+        username="";
+    }
 
-    public String getNombreuser() {
-        return nombreuser;
+    public String getUsername() {
+        return username;
     }
-    public void setNombreUser(String nombre){
-        nombreuser=nombre;
+    public void setUsername (String nombre){
+        username=nombre;
     }
     
 }

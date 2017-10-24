@@ -3,30 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global connectAndSubscribe, Stomp*/
+/* global connectAndSubscribe, Stomp, apiclient,ingresarApp */
 
+var api=apiclient;
 salasApp = (function () {
-    var nameuser = "hola";
-    var idroom=null;
-    var stompClient = null;
-    var suscriberoom=null;
+    var username;
+    var idsala;
+    var stompClient;
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS("/stompendpoint");
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe("/topic/rooms", function (data) {
-                var val=JSON.parse(data.body);
-                var idsala= val.map(function (sala){
-                    return "<tr><td>" + sala+ "</td>\n\
-                            <td><button type='button' onclick=salasApp.connectSala('"+sala+"')>Unirse</td></tr>";
+            stompClient.subscribe("/topic/"+idsala+"/equipos", function (data) {
+                var equipos=JSON.parse(data.body);
+                $("#menutable2 table tbody tr").remove();
+                var eq=equipos[0].map(function (dato){
+                    return "<tr><td>"+dato.username+"</td><td></td></tr>"
                 });
-                $("#menutable table tbody tr").remove();
-                $("#menutable table tbody").append(idsala);
+                $("#menutable2 table tbody").append(eq);
+                var eq=equipos[1].map(function (dato){
+                    return "<tr><td></td><td>"+dato.username+"</td></tr>"
+                });
+                $("#menutable2 table tbody ").append(eq);
                 
             });
-            suscriberoom=stompClient.subscribe("/topic/room."+idroom, function (data) {
+            stompClient.subscribe("/topic/room."+idsala, function (data) {
                 var val=JSON.parse(data.body);
                 var idsala= val.map(function (usuario){
                     return "<tr><td>" + usuario+ "</td></tr>";
@@ -34,37 +37,26 @@ salasApp = (function () {
                 $("#menutable2 table tbody tr").remove();
                 $("#menutable2 table tbody").append(idsala);
             });
-            stompClient.subscribe("", function (data) {
-
-            });
-            stompClient.send("/app/rooms");
+            
         });
         
+        
     };
-    
-            
+     
     return {
-        connectSala: function (room) {
-           if(idroom!==null){
-                if(idroom!==room){
-                    $("menutable2 table tbody tr").remove();
-                    suscriberoom.unsubscribe(room);
-                    idroom=room;
-                }
-            }else{
-                idroom=room;
-                connectAndSubscribe().then(stompClient.send("/app/room."+idroom, {}, JSON.stringify(nameuser)));
-                
-            }
+        connectSala: function () {
+            username = sessionStorage.getItem('username');
+            api.getSala(function (sala){
+                idsala=sala;
+                connectAndSubscribe();
+            })
+            console.log(username);
         },
-        saveName: function (){
-            nameuser = $('#usuario').val();
+        addEquipo1: function () {
+            api.addEquipo1(idsala,username);
         },
-        getSalas:function (){
-            connectAndSubscribe();
-        },
-        disconnectSala: function () {
-            stompClient.send("/app/room."+idroom, {}, JSON.stringify(nameuser));
+        addEquipo2: function () {
+            api.addEquipo2(idsala,username);
         },
         disconnect: function () {
             if (stompClient !== null) {
@@ -75,11 +67,14 @@ salasApp = (function () {
     };
 })();
 $(document).ready(function(){
-    $("#login-button").click(function () {
-        salasApp.saveName();
+    $("#e1").click(function () {
+        salasApp.addEquipo1();
+        /*$(this).prop('disabled', true);*/
+        
     });
-    $("#l").click(function () {
-        salasApp.disconnectSala();
+    $("#e2").click(function () {
+        salasApp.addEquipo2();
+        /*$(this).prop('disabled', true);*/
     });
    
 });

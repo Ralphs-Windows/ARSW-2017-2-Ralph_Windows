@@ -18,6 +18,82 @@ apiclient= (function() {
                     }
             );
             return getpromise;
+        },
+        getSala:function (callback){ 
+            var getpromise = $.get("/juego/Sala",callback);
+            getpromise.then(
+                    function () {
+                        console.info("OK getSalaDisponible");
+                        
+                    },
+                    function () {
+                        alert("Error getSalaDisponible");
+                    }
+            );
+            return getpromise;
+        },
+        getEquipo1:function (idsala,callback){ 
+            var getpromise = $.get("/juego/"+idsala+"/equipo1",callback);
+            getpromise.then(
+                    function () {
+                        console.info("OK getEquipo1");
+                        
+                    },
+                    function () {
+                        alert("Error getEquipo1");
+                    }
+            );
+            return getpromise;
+        },
+        getEquipo2:function (idsala,callback){ 
+            var getpromise = $.get("/juego/"+idsala+"/equipo2",callback);
+            getpromise.then(
+                    function () {
+                        console.info("OK getEquipo2");
+                        
+                    },
+                    function () {
+                        alert("Error getEquipo2");
+                    }
+            );
+            return getpromise;
+        },
+        addEquipo1:function (idsala,jugador){ 
+            var putpromise =$.ajax({
+                url: "/juego/"+idsala+"/equipo1",
+                type: 'PUT',
+                data: JSON.stringify({username:jugador}),
+                contentType: "application/json"
+            });
+            putpromise.then(
+                    function () {
+                        console.info("OK putEquipo1");
+                        
+                    },
+                    function () {
+                        alert("Error putEquipo1");
+                    }
+            );
+            return putpromise;
+        },
+        addEquipo2:function (idsala,jugador){ 
+            var putpromise =$.ajax({
+                url: "/juego/"+idsala+"/equipo2",
+                type: 'PUT',
+                data: JSON.stringify({username:jugador}),
+                contentType: "application/json"
+            });
+            putpromise.then(
+                    function () {
+                        console.info("OK putEquipo2");
+                        
+                    },
+                    function () {
+                        alert("Error putEquipo2");
+                    }
+            );
+            return putpromise;
         }
+        
     };
 })();

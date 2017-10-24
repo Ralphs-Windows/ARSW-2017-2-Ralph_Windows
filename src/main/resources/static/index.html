@@ -15,8 +15,9 @@ and open the template in the editor.
         <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />  
         <link rel="stylesheet" href="/css/design.css" />
         <link rel="stylesheet" href="css/design.css" type="text/css">
-        <script src="js/apiclient.js"></script>
-        <script src="js/salasApp.js"></script>
+        <!--script src="js/apiclient.js"></script>
+        <script src="js/salasApp.js"></script-->
+        <script src="js/ingresarApp.js"></script>
     </head>
 
     <body > 
@@ -30,10 +31,10 @@ and open the template in the editor.
                     <br>
                     <br>
                     <form class="form">
-                        <input type="text"  id="usuario" placeholder="Nombre">
+                        <input type="text"  name="usuario" id="usuarioid"  placeholder="Nombre">
                         <!--<input type="password" placeholder="Clave">-->
                         <br>
-                        <a href="menu.html"  target="_self"> <input type="button" id="login-button" name="boton" value="Ingresar" /> </a> 
+                        <a href="menu.html" ><button type="button"  id="login-button">Ingresar</button></a>
                     </form>
                 </div>
 
@@ -41,7 +42,7 @@ and open the template in the editor.
             <div style="text-align-last: right;">
                     <img id="imagenFondo" src="img/fondoinicial.jpg"  />
             </div>
-
+            <b id="username1"></b>
             <footer>
                 Proyecto ARSW<br>
                 proyectoARSW@mail.com

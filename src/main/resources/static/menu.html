@@ -18,11 +18,15 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/design.css" type="text/css">
         <script src="js/apiclient.js"></script>
         <script src="js/salasApp.js"></script>
+        <script src="js/ingresarApp.js"></script>
     </head>
     <!--style="background-color:#000000;"-->
-    <body onload="salasApp.getSalas()">
+    <body onload="salasApp.connectSala()" >
         <img  src="img/captura.png" style="text-align: center;  width: 20%" />
         <nav class="navbar navbar-default" role="navigation" >
+            <div class="navbar-header">
+                <li class="navbar-brand" ><b id="username1"></b></li>
+            </div>
             <ul class="nav navbar-nav">
                 <li><a href="Perfil.html" target="_self">Mi Perfíl</a></li>
                 <li><a href="instrucciones.html" target="_self">Instrucciones</a></li>  
@@ -32,7 +36,7 @@ and open the template in the editor.
                 <li><a href="index.html"><span class="glyphicon glyphicon-off"></span>Salir</a></li>
             </ul>
         </nav>
-        <div id="menutable" class="table table-striped" style="float: left;width:40%" >
+        <!--div id="menutable" class="table table-striped" style="float: left;width:40%" >
             <table id="info" class='table table-bordered' >
                 <thead class='thead-default' style="text-align: center">
                     <tr>
@@ -44,25 +48,42 @@ and open the template in the editor.
                 </tbody>
             </table>
            
-        </div>
-        <div id="menutable2" style="float: right ;width:55%">
-             <table id="equipos" class='table table-bordered' >
-                <thead style="text-align: center">
-                    <tr>
-                        <th><b>Equipo #1</b></th>
-                        <th><b>Equipo #2</b></th>
+        </div-->
+        <div id="menutable2" style="text-align: center;position: fixed;width: 100%">
+            <table id="equipos" class='table table-bordered'  style="width: 50%">
+                <thead >
+                    <tr >
+                        <th style="text-align: center">
+                            <b>Equipo #1</b>
+                        </th>
+                        <th style="text-align: center">
+                            <b>Equipo #2</b>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style="text-align: center">
+                            <b>
+                                <img id="imagenFondo" src="img/personajes/felix1R0.png" style="width: 15%" />
+                            </b>
+                        </th>
+                        <th style="text-align: center">
+                            <b>
+                                <img id="imagenFondo" src="img/personajes/felixL0.png" style="width: 15%"  />
+                            </b>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
                 <tfoot>
                     <tr >
-                        <td colspan="2"><input type="button" id="l" value="Prueba" /></td>
+                        <td colspan="1"><input type="button" id="e1" value="Elegir Equipo1" /></td>
+                        <td colspan="1"><input type="button" id="e2" value="Elegir Equipo2" /></td>
                     </tr>
                 </tfoot>
             </table>
         </div>
-        <div> </div>
+        
         
     </body>
 </html>

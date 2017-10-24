@@ -9,6 +9,7 @@ import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Tuple;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  *
@@ -35,9 +36,9 @@ public interface RalphWindowsPersistence {
      */
     public ArrayList getSalasJuegoDisponibles() throws RalphWindowsPersistenceException;
 
-    public List<Jugador> getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException;
+    public ConcurrentLinkedDeque getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException;
 
-    public List<Jugador> getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException;
+    public ConcurrentLinkedDeque getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException;
 
     public void registrarJugadorEquipoFelix1(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
 

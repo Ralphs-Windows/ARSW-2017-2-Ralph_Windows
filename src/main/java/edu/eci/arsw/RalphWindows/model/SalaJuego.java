@@ -6,7 +6,6 @@
 package edu.eci.arsw.RalphWindows.model;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -14,16 +13,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class SalaJuego {
     private Integer id;
-    private CopyOnWriteArrayList<Jugador> equipo1;
-    private CopyOnWriteArrayList<Jugador> equipo2;
+    private ConcurrentLinkedDeque<Jugador> equipo1;
+    private ConcurrentLinkedDeque<Jugador> equipo2;
     
-    public SalaJuego(Integer id,CopyOnWriteArrayList<Jugador> eq1,CopyOnWriteArrayList<Jugador> eq2) {
+    public SalaJuego(Integer id,ConcurrentLinkedDeque<Jugador> eq1,ConcurrentLinkedDeque<Jugador> eq2) {
         equipo1=eq1;
         equipo2=eq2;
     };
     public SalaJuego(){
-        equipo1=new CopyOnWriteArrayList();
-        equipo2=new CopyOnWriteArrayList();
+        equipo1=new ConcurrentLinkedDeque();
+        equipo2=new ConcurrentLinkedDeque(); 
     };
     
     public Integer getId() {
@@ -34,19 +33,19 @@ public class SalaJuego {
         this.id = id;
     }
 
-    public CopyOnWriteArrayList<Jugador> getEquipo1() {
+    public ConcurrentLinkedDeque<Jugador> getEquipo1() {
         return equipo1;
     }
 
-    public void setEquipo1(CopyOnWriteArrayList<Jugador> equipo1) {
+    public void setEquipo1(ConcurrentLinkedDeque<Jugador> equipo1) {
         this.equipo1 = equipo1;
     }
 
-    public CopyOnWriteArrayList<Jugador> getEquipo2() {
+    public ConcurrentLinkedDeque<Jugador> getEquipo2() {
         return equipo2;
     }
 
-    public void setEquipo2(CopyOnWriteArrayList<Jugador> equipo2) {
+    public void setEquipo2(ConcurrentLinkedDeque<Jugador> equipo2) {
         this.equipo2 = equipo2;
     }
 

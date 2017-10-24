@@ -11,6 +11,7 @@ import edu.eci.arsw.RalphWindows.services.RalphWindowsException;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,21 +50,21 @@ public class RalphWindowsRESTController {
     }
 
     @RequestMapping(path = "/{juegonum}/equipo1", method = RequestMethod.PUT)
-    public ResponseEntity<?> agregarEquipo1(@PathVariable(name = "juegonum") String juegonum, @RequestBody Jugador p) throws RalphWindowsException, RalphWindowsPersistenceException {
+    public ResponseEntity<?> agregarEquipo1(@PathVariable String juegonum, @RequestBody Jugador p) throws RalphWindowsException, RalphWindowsPersistenceException {
         synchronized (RalphServices) {
             try {
                 if (RalphServices.getEquipoFelix1(Integer.parseInt(juegonum)).size() < 1) {
                     RalphServices.registrarJugadorFelix1(Integer.parseInt(juegonum), p);
-                    ArrayList<List<Jugador>> temp = new ArrayList<>();
-                    List<Jugador> equipo1 = RalphServices.getEquipoFelix1(Integer.parseInt(juegonum));
-                    List<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
+                    ArrayList<ConcurrentLinkedDeque<Jugador>> temp = new ArrayList<>();
+                    ConcurrentLinkedDeque<Jugador> equipo1 = RalphServices.getEquipoFelix1(Integer.parseInt(juegonum));
+                    ConcurrentLinkedDeque<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
                     temp.add(equipo1);
                     temp.add(equipo2);
 
-                    if (equipo2.size() == 1 && equipo1.size() == 1) {
+                    if (equipo2.size() == 2 && equipo1.size() == 2) {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
-                    msgt.convertAndSend("/topic/mostrarJugadores", temp);
+                    msgt.convertAndSend("/topic/"+juegonum+"/equipos", temp);
                 } else {
                     throw new RalphWindowsException("No se puede elegir el equipo 1 porque está lleno");
                 }
@@ -77,21 +78,21 @@ public class RalphWindowsRESTController {
     }
 
     @RequestMapping(path = "/{juegonum}/equipo2", method = RequestMethod.PUT)
-    public ResponseEntity<?> agregarEquipo2(@PathVariable(name = "juegonum") String juegonum, @RequestBody Jugador p) throws RalphWindowsException, RalphWindowsPersistenceException {
+    public ResponseEntity<?> agregarEquipo2(@PathVariable String juegonum, @RequestBody Jugador p) throws RalphWindowsException, RalphWindowsPersistenceException {
         synchronized (RalphServices) {
             try {
                 if (RalphServices.getEquipoFelix2(Integer.parseInt(juegonum)).size() < 1) {
                     RalphServices.registrarJugadorFelix2(Integer.parseInt(juegonum), p);
-                    ArrayList<List<Jugador>> temp = new ArrayList<>();
-                    List<Jugador> equipo1 = RalphServices.getEquipoFelix1(Integer.parseInt(juegonum));
-                    List<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
+                    ArrayList<ConcurrentLinkedDeque<Jugador>> temp = new ArrayList<>();
+                    ConcurrentLinkedDeque<Jugador> equipo1 = RalphServices.getEquipoFelix1(Integer.parseInt(juegonum));
+                    ConcurrentLinkedDeque<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
                     temp.add(equipo1);
                     temp.add(equipo2);
 
-                    if (equipo2.size() == 1 && equipo1.size() == 1) {
+                    if (equipo2.size() == 2 && equipo1.size() == 2) {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
-                    msgt.convertAndSend("/topic/mostrarJugadores", temp);
+                    msgt.convertAndSend("/topic/"+juegonum+"/equipos", temp);
                 } else {
                     throw new RalphWindowsException("No se puede elegir el equipo 2 porque está lleno");
                 }
@@ -105,7 +106,7 @@ public class RalphWindowsRESTController {
     }
 
     @RequestMapping(path = "/{juegonum}/equipo1", method = RequestMethod.GET)
-    public ResponseEntity<?> getEquipo1(@PathVariable(name = "juegonum") String juegonum) {
+    public ResponseEntity<?> getEquipo1(@PathVariable String juegonum) {
 
         try {
             return new ResponseEntity<>(RalphServices.getEquipoFelix1(Integer.parseInt(juegonum)), HttpStatus.ACCEPTED);
@@ -119,7 +120,7 @@ public class RalphWindowsRESTController {
     }
 
     @RequestMapping(path = "/{juegonum}/equipo2", method = RequestMethod.GET)
-    public ResponseEntity<?> getEquipo2(@PathVariable(name = "juegonum") String juegonum) {
+    public ResponseEntity<?> getEquipo2(@PathVariable String juegonum) {
 
         try {
             return new ResponseEntity<>(RalphServices.getEquipoFelix2(Integer.parseInt(juegonum)), HttpStatus.ACCEPTED);
@@ -127,6 +128,17 @@ public class RalphWindowsRESTController {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         } catch (NumberFormatException ex) {
+            Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("/{juegonum}/ debe ser un valor numerico.", HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(path = "/Sala", method = RequestMethod.GET)
+    public ResponseEntity<?> getSalaDisponible() {
+
+        try {
+            return new ResponseEntity<>(RalphServices.getSalaDisponible(), HttpStatus.ACCEPTED);
+        } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("/{juegonum}/ debe ser un valor numerico.", HttpStatus.BAD_REQUEST);
         }

@@ -10,6 +10,7 @@ import edu.eci.arsw.RalphWindows.model.Tuple;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +28,12 @@ public class RalphWindowsService {
         return ralphpersistence.getMapajuego();
     }
 
-    public List<Jugador> getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException {
+    public ConcurrentLinkedDeque getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException {
         return ralphpersistence.getEquipoFelix1(juegonum);
     }
 
-    public List<Jugador> getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException {
-        return ralphpersistence.getEquipoFelix1(juegonum);
+    public ConcurrentLinkedDeque getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException {
+        return ralphpersistence.getEquipoFelix2(juegonum);
     }
 
     public void registrarJugadorFelix1(int juegonum, Jugador p) throws RalphWindowsPersistenceException {

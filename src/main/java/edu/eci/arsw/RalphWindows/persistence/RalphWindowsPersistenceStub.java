@@ -28,20 +28,7 @@ public class RalphWindowsPersistenceStub implements RalphWindowsPersistence {
 
     public RalphWindowsPersistenceStub() {
         DatosSalas = new ConcurrentHashMap<>();
-        CopyOnWriteArrayList<Jugador> eq1 = new CopyOnWriteArrayList<>();
-        CopyOnWriteArrayList<Jugador> eq2 = new CopyOnWriteArrayList<>();
-        CopyOnWriteArrayList<Jugador> eq11 = new CopyOnWriteArrayList<>();
-        Jugador j1 = new Jugador("Laura");
-        Jugador j2 = new Jugador("Laura2");
-        Jugador j3 = new Jugador("Laura3");
-        Jugador j4 = new Jugador("Laura4");
-        eq2.add(j2);
-        eq1.add(j1);
-        eq11.add(j4);
-        eq11.add(j3);
-        DatosSalas.put(1, new SalaJuego());
-        DatosSalas.put(2, new SalaJuego(2, eq1, eq2));
-        DatosSalas.put(1, new SalaJuego(3, eq11, new CopyOnWriteArrayList()));
+        DatosSalas.put(0, new SalaJuego());
     }
 
     @Override
@@ -56,21 +43,22 @@ public class RalphWindowsPersistenceStub implements RalphWindowsPersistence {
 
     @Override
     public void registrarJugadorEquipoFelix1(int juegonum, Jugador p) throws RalphWindowsPersistenceException {
+        DatosSalas.get(juegonum).getEquipo1().add(p);
 
     }
 
     @Override
     public void registrarJugadorEquipoFelix2(int juegonum, Jugador p) throws RalphWindowsPersistenceException {
-
+        DatosSalas.get(juegonum).getEquipo2().add(p);
     }
 
     @Override
-    public List<Jugador> getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException {
+    public ConcurrentLinkedDeque getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException {
         return DatosSalas.get(juegonum).getEquipo1();
     }
 
     @Override
-    public List<Jugador> getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException {
+    public ConcurrentLinkedDeque getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException {
         return DatosSalas.get(juegonum).getEquipo2();
 
     }

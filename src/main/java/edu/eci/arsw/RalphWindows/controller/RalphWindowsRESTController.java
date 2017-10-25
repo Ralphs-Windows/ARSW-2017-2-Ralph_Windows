@@ -59,7 +59,7 @@ public class RalphWindowsRESTController {
                     ConcurrentLinkedDeque<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
                  
 
-                    if (equipo2.size() == 2 && equipo1.size() == 2) {
+                    if (equipo2.size() == 1 && equipo1.size() == 1) {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
                     msgt.convertAndSend("/topic/equipo1."+juegonum, equipo1);
@@ -86,7 +86,7 @@ public class RalphWindowsRESTController {
                     ConcurrentLinkedDeque<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
                     
 
-                    if (equipo2.size() == 2 && equipo1.size() == 2) {
+                    if (equipo2.size() == 1 && equipo1.size() == 1) {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
                     msgt.convertAndSend("/topic/equipo2."+juegonum, equipo2);

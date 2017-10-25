@@ -23,12 +23,9 @@ public class RalphSTOMPMessagesHandlerController{
     @Autowired
     SimpMessagingTemplate msgt;
     ConcurrentHashMap<String,ConcurrentLinkedQueue<String>> idrooms=new ConcurrentHashMap<>();
-    @MessageMapping("/rooms")
-    public void getSalas() throws Exception {
-        System.err.println("nuevo usuario suscrito a las salas");
-        ConcurrentLinkedQueue a=new ConcurrentLinkedQueue<>();a.add("dgsg");
-        idrooms.put("prueba1",a);
-        msgt.convertAndSend("/topic/rooms",idrooms.keySet());
+    @MessageMapping("/mover.{idsala}")
+    public void mover(@DestinationVariable String idsala) throws Exception {
+        msgt.convertAndSend("/topic/juego/mover."+idsala,"");
     }
     
     @MessageMapping("/room.{id}")

@@ -61,11 +61,11 @@ salasApp = (function () {
             console.log(username);
         },
         addEquipo1: function () {
-            sessionStorage.setItem('eq',2);
+            sessionStorage.setItem('eq',"1");
             api.addEquipo1(idsala,username);
         },
         addEquipo2: function () {
-            sessionStorage.setItem('eq',1);
+            sessionStorage.setItem('eq',"2");
             api.addEquipo2(idsala,username);
         },
         disconnect: function () {

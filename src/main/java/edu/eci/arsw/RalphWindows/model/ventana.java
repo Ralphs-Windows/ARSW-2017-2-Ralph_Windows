@@ -20,7 +20,6 @@ public class ventana {
      * @param w El ancho de la ventana.
      * @param h El largo de la ventana.
      * @param estado El largo de la ventana. 
-     * @param nombre El nombre d ela ventana
      */
     public ventana(int x, int y, int w, int h,int estado) {
         ubicacion= new Ubicacion(x, y, w, h);

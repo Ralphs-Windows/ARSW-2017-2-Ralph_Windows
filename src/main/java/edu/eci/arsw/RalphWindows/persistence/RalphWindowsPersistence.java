@@ -7,8 +7,6 @@ package edu.eci.arsw.RalphWindows.persistence;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Tuple;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -18,33 +16,60 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public interface RalphWindowsPersistence {
 
     /**
-     * Retorna una tupla con los estados inciales d ela ventanas
+     * Retorna una tupla con los estados inciales de las ventanas
      *
-     * @return
+     * @return retorna un mapa de las ventanas
      * @throws
      * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
      *
      */
     public Tuple[][] getMapajuego() throws RalphWindowsPersistenceException;
 
+    
     /**
-     * Retorna las Salas de juego disponibles donde aun no hay 4 jugadores
+     * Retorna el equipo1 de la sala de juego
      *
-     * @return
-     * @throws
-     * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException*
+     * @param juegonum la id de la sala correspondiente
+     * @return 
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
      */
-    public ArrayList getSalasJuegoDisponibles() throws RalphWindowsPersistenceException;
-
     public ConcurrentLinkedDeque getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException;
-
+    /**
+     * Retorna el equipo2 de la sala de juego
+     *
+     * @param juegonum la id de la sala correspondiente
+     * @return 
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     */
     public ConcurrentLinkedDeque getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException;
-
+    /**
+     * RegistrarJugadorEquipoFelix2 a la sala de juego
+     *
+     * @param juegonum la id de la sala correspondiente
+     * @param p El nuevo jugador a registrar
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     */
     public void registrarJugadorEquipoFelix1(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
-
+    /**
+     * RegistrarJugadorEquipoFelix2 a la sala de juego
+     *
+     * @param juegonum la id de la sala correspondiente
+     * @param p El nuevo jugador a registrar
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     */
     public void registrarJugadorEquipoFelix2(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
-
+    /**
+     * Retorna la sala de juego disponible actual para registrar jugadores
+     *
+     * @return  el id de la sala disponible
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     */
     public int getSalaDisponible() throws RalphWindowsPersistenceException;
-
+    /**
+     * Cambia la sala disponible actual
+     *
+     * @param sala 
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     */
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException;
 }

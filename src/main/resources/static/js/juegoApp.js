@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global apiclient */
+/* global apiclient, idsala, Stomp */
 
 var api=apiclient;
 juegoApp=(function (){
     var vx=10;
     var vy=0;
+    var stompClient;
+    var idsala;
+    var eq;
+    var posx;
+    var posy;
+    var mirada;
     function ventana(tupla,val){
         var canvas = document.getElementById("micanvas");
         var ctx = canvas.getContext("2d");
@@ -23,21 +29,60 @@ juegoApp=(function (){
             }
         };
         
-    }/**
-    function felix1(){
-        var canvas = document.getElementById("micanvas");
-        var ctx = canvas.getContext("2d");
-        var img = new Image();
-        img.src = "/img/personajes"+tupla.elem1+"/"+tupla.elem2+".png";
     }
-    function felix2(){
+    function map(mapa) {
+        for (var i = 0; i < mapa.length; i++) {
+            for (var j = 0; j < mapa[i].length; j++) {
+                console.log(j === mapa[i].length - 1);
+                ventana(mapa[i][j], j === mapa[i].length - 1);
+            }
+        }
+        felix(eq);
+    }
+    
+    var connectAndSubscribe = function () {
+        console.info('Connecting to WS...');
+        var socket = new SockJS("/stompendpoint");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe("/topic/juego/"+idsala+".mover", function (data) {
+                var a=JSON.parse(data.body);
+            });
+            stompClient.subscribe("/topic/juego/"+idsala+".reparar", function (data) {
+               
+            });
+            stompClient.subscribe("/topic/juego/"+idsala+".mapa", function (data) {
+                mapa(JSON.parse(data.body));
+                
+            });
+            
+        });
+    };
+    function felix(eq){
         var canvas = document.getElementById("micanvas");
         var ctx = canvas.getContext("2d");
         var img = new Image();
-        img.src = "/img/ventana"+tupla.elem1+"/"+tupla.elem2+".png";
-    }*/
+        if (eq === 1) {
+            img.src = "/img/personajes/felix1"+mirada+".png";
+        } else {
+            img.src = "/img/personajes/felix"+mirada+".png";
+        }
+        img.onload = function () {
+            ctx.drawImage(img,posx,posy,55,70);
+        };
+    }
     return{
         init:function(){
+            idsala=sessionStorage.getItem('idroom');
+            eq=sessionStorage.getItem('eq');
+            var canvas = document.getElementById("micanvas");
+            if(eq===1){
+                posx=canvas.width-55;posy=canvas.height-70;mirada="L0";
+            }else{
+                posx=0;posy=canvas.height-70;mirada="R0";
+            }
+            connectAndSubscribe();
             $(document).keydown(function (event) {
                 var keypress=event.keyCode;
                 /*repare*/
@@ -51,15 +96,7 @@ juegoApp=(function (){
                 /*down*/
                 else if(keypress===40){}
             });
-            api.getMapa(function (mapa){
-                for (var i = 0;  i< mapa.length; i++) {
-                    for (var j = 0;  j< mapa[i].length; j++){
-                        console.log(j===mapa[i].length-1);
-                        ventana(mapa[i][j],j===mapa[i].length-1);
-                    }
-                }
-            });
-            
+            api.getMapa(map);
         }
     };
 })();

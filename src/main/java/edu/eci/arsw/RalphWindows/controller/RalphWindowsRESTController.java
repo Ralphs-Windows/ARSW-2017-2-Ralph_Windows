@@ -37,34 +37,33 @@ public class RalphWindowsRESTController {
 
     @Autowired
     SimpMessagingTemplate msgt;
-
-    @RequestMapping(path = "/mapaJuego", method = RequestMethod.GET)
+    
+    @RequestMapping(path = "/mapajuego", method = RequestMethod.GET)
     public ResponseEntity<?> getMapa() {
         try {
-            System.out.println("");
-            return new ResponseEntity<>(RalphServices.getMapajuego(), HttpStatus.ACCEPTED);
-        } catch (NumberFormatException | RalphWindowsPersistenceException ex) {
+            return new ResponseEntity<>(RalphServices.getMapajuego(),HttpStatus.ACCEPTED);
+        } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("error al cargar mapa", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
     }
-
+    
+        
     @RequestMapping(path = "/{juegonum}/equipo1", method = RequestMethod.PUT)
     public ResponseEntity<?> agregarEquipo1(@PathVariable String juegonum, @RequestBody Jugador p) throws RalphWindowsException, RalphWindowsPersistenceException {
         synchronized (RalphServices) {
             try {
                 if (RalphServices.getEquipoFelix1(Integer.parseInt(juegonum)).size() < 1) {
                     RalphServices.registrarJugadorFelix1(Integer.parseInt(juegonum), p);
-                    ArrayList<ConcurrentLinkedDeque<Jugador>> temp = new ArrayList<>();
                     ConcurrentLinkedDeque<Jugador> equipo1 = RalphServices.getEquipoFelix1(Integer.parseInt(juegonum));
                     ConcurrentLinkedDeque<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
-                    temp.add(equipo1);
-                    temp.add(equipo2);
+                 
 
                     if (equipo2.size() == 2 && equipo1.size() == 2) {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
-                    msgt.convertAndSend("/topic/"+juegonum+"/equipos", temp);
+                    msgt.convertAndSend("/topic/equipo1."+juegonum, equipo1);
+                    msgt.convertAndSend("/topic/juego/"+juegonum,equipo1.size()+equipo2.size()==2);
                 } else {
                     throw new RalphWindowsException("No se puede elegir el equipo 1 porque está lleno");
                 }
@@ -73,7 +72,7 @@ public class RalphWindowsRESTController {
                 Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
                 return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -83,16 +82,15 @@ public class RalphWindowsRESTController {
             try {
                 if (RalphServices.getEquipoFelix2(Integer.parseInt(juegonum)).size() < 1) {
                     RalphServices.registrarJugadorFelix2(Integer.parseInt(juegonum), p);
-                    ArrayList<ConcurrentLinkedDeque<Jugador>> temp = new ArrayList<>();
                     ConcurrentLinkedDeque<Jugador> equipo1 = RalphServices.getEquipoFelix1(Integer.parseInt(juegonum));
                     ConcurrentLinkedDeque<Jugador> equipo2 = RalphServices.getEquipoFelix2(Integer.parseInt(juegonum));
-                    temp.add(equipo1);
-                    temp.add(equipo2);
+                    
 
                     if (equipo2.size() == 2 && equipo1.size() == 2) {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
-                    msgt.convertAndSend("/topic/"+juegonum+"/equipos", temp);
+                    msgt.convertAndSend("/topic/equipo2."+juegonum, equipo2);
+                    msgt.convertAndSend("/topic/juego/"+juegonum, equipo1.size()+equipo2.size()==2);
                 } else {
                     throw new RalphWindowsException("No se puede elegir el equipo 2 porque está lleno");
                 }

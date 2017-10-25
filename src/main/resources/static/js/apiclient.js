@@ -7,7 +7,7 @@
 apiclient= (function() {
     return{
         getMapa: function (callback){
-           var getpromise = $.get("/juego/mapaJuego",callback);
+           var getpromise = $.get("/juego/mapajuego",callback);
             getpromise.then(
                     function () {
                         console.info("OK getMapajuego");

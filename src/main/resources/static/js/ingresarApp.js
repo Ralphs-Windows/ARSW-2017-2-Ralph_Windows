@@ -8,8 +8,12 @@ ingresarApp= (function() {
     var username;
     return{
         saveName: function (){
-            sessionStorage.setItem('username', document.getElementById('usuarioid').value);
-            
+            username=document.getElementById('usuarioid').value;
+            if(username!==""){
+                sessionStorage.setItem('username', document.getElementById('usuarioid').value);
+            }else{
+                Error("Digite un nombre valido el nombre digitado es: "+username);
+            }
         }
     };
 })();

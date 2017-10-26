@@ -6,8 +6,8 @@
 
 apiclient= (function() {
     return{
-        getMapa: function (callback){
-           var getpromise = $.get("/juego/mapajuego",callback);
+        getMapa: function (idsala,callback){
+           var getpromise = $.get("/juego/"+idsala+"/mapajuego",callback);
             getpromise.then(
                     function () {
                         console.info("OK getMapajuego");
@@ -18,6 +18,28 @@ apiclient= (function() {
                     }
             );
             return getpromise;
+        },
+        setMapa: function (idsala,v){
+            for (var i = 0;i <v.length; i++) {
+                for (var j = 0; j < v[i].length; j++) {
+                }
+            }
+            console.log(JSON.stringify(v));
+           var putpromise =$.ajax({
+                url: "/juego/"+idsala+"/updatemapajuego",
+                type: 'PUT',
+                data: JSON.stringify(v),
+                contentType: "application/json"
+            });
+            putpromise.then(
+                    function () {
+                        console.info("OK setMapajuego");
+                    },
+                    function () {
+                        alert("Error setMapajuego");
+                    }
+            );
+            return putpromise;
         },
         getSala:function (callback){ 
             var getpromise = $.get("/juego/Sala",callback);

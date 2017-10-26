@@ -15,14 +15,17 @@ public class SalaJuego {
     private Integer id;
     private ConcurrentLinkedDeque<Jugador> equipo1;
     private ConcurrentLinkedDeque<Jugador> equipo2;
+    private ventana[][] mapaventanas;
     
     public SalaJuego(Integer id,ConcurrentLinkedDeque<Jugador> eq1,ConcurrentLinkedDeque<Jugador> eq2) {
         equipo1=eq1;
         equipo2=eq2;
+        mapaventanas=Mapa.dibujarMapa();
     };
     public SalaJuego(){
         equipo1=new ConcurrentLinkedDeque();
         equipo2=new ConcurrentLinkedDeque(); 
+        mapaventanas=Mapa.dibujarMapa();
     };
     
     public Integer getId() {
@@ -49,4 +52,12 @@ public class SalaJuego {
         this.equipo2 = equipo2;
     }
 
+    public ventana[][] getMapaventanas() {
+        return mapaventanas;
+    }
+
+    public void setMapaventanas(ventana[][] mapaventanas) {
+        this.mapaventanas = mapaventanas;
+    }
+    
 }

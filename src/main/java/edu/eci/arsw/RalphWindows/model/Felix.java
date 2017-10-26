@@ -12,8 +12,13 @@ package edu.eci.arsw.RalphWindows.model;
  */
 public class Felix{
     private Ubicacion ubicacion;
-    public Felix(int x, int y, int w, int h) {
+    private int eq;
+    private String dir;
+    public Felix(int x, int y, int w, int h,int eq,String r) {
         ubicacion=new Ubicacion(x, y, w, h);
+        this.eq=eq;
+        this.dir=r;
+        
     }
     public Felix() {
     }
@@ -25,6 +30,24 @@ public class Felix{
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
+
+    public int getEq() {
+        return eq;
+    }
+
+    public void setEq(int eq) {
+        this.eq = eq;
+    }
+
+    public String getDir() {
+        return dir;
+    }
+
+    public void setDir(String mirada) {
+        this.dir = mirada;
+    }
+
+    
     
 }   
 

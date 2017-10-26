@@ -5,6 +5,8 @@ package edu.eci.arsw.RalphWindows.controller;
  * and open the template in the editor.
  */
 
+import edu.eci.arsw.RalphWindows.model.Felix;
+import edu.eci.arsw.RalphWindows.services.RalphWindowsService;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,13 @@ public class RalphSTOMPMessagesHandlerController{
 
     @Autowired
     SimpMessagingTemplate msgt;
+    @Autowired
+    RalphWindowsService services;
+    
     ConcurrentHashMap<String,ConcurrentLinkedQueue<String>> idrooms=new ConcurrentHashMap<>();
     @MessageMapping("/mover.{idsala}")
-    public void mover(@DestinationVariable String idsala) throws Exception {
-        msgt.convertAndSend("/topic/juego/mover."+idsala,"");
+    public void mover(@DestinationVariable String idsala,Felix f) throws Exception {
+        msgt.convertAndSend("/topic/juego/mover."+idsala,f);
     }
     
     @MessageMapping("/room.{id}")

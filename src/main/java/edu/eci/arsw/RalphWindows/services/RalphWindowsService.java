@@ -7,6 +7,7 @@ package edu.eci.arsw.RalphWindows.services;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Tuple;
+import edu.eci.arsw.RalphWindows.model.ventana;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
 import java.util.List;
@@ -24,10 +25,12 @@ public class RalphWindowsService {
     @Autowired
     RalphWindowsPersistence ralphpersistence = null;
 
-    public Tuple[][] getMapajuego() throws RalphWindowsPersistenceException {
-        return ralphpersistence.getMapajuego();
+    public ventana[][] getMapajuego(int juegonum) throws RalphWindowsPersistenceException {
+        return ralphpersistence.getMapajuego(juegonum);
     }
-
+    public void setMapajuego(int juegonum,ventana[][] v) throws RalphWindowsPersistenceException {
+        ralphpersistence.setMapajuego(juegonum,v);
+    }
     public ConcurrentLinkedDeque getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException {
         return ralphpersistence.getEquipoFelix1(juegonum);
     }

@@ -6,10 +6,12 @@
 package edu.eci.arsw.RalphWindows.controller;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
+import edu.eci.arsw.RalphWindows.model.ventana;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsException;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Level;
@@ -38,10 +40,22 @@ public class RalphWindowsRESTController {
     @Autowired
     SimpMessagingTemplate msgt;
     
-    @RequestMapping(path = "/mapajuego", method = RequestMethod.GET)
-    public ResponseEntity<?> getMapa() {
+    @RequestMapping(path = "/{juegonum}/mapajuego", method = RequestMethod.GET)
+    public ResponseEntity<?> getMapa(@PathVariable String juegonum) {
+        synchronized (RalphServices) {
         try {
-            return new ResponseEntity<>(RalphServices.getMapajuego(),HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(RalphServices.getMapajuego(Integer.parseInt(juegonum)),HttpStatus.ACCEPTED);
+        } catch (RalphWindowsPersistenceException ex) {
+            Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }}
+    }
+    
+    @RequestMapping(path = "/{juegonum}/updatemapajuego", method = RequestMethod.PUT)
+    public ResponseEntity<?> updatetMapa(@PathVariable String juegonum, ventana[][] v) {
+        try {System.out.println("dfhhdh"+v[0][0]);
+            RalphServices.setMapajuego(Integer.parseInt(juegonum),v);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);

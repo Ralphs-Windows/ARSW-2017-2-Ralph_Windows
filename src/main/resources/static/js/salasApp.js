@@ -16,9 +16,7 @@ salasApp = (function () {
             return "<tr><td>" + dato.username + "</td></tr>";
         });
         $("#equipo"+num+" tbody ").append(eq);
-        if (equipo.length === 2) {
-            $("#e"+num).prop('disabled', true);
-        }
+        
     }
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
@@ -50,23 +48,23 @@ salasApp = (function () {
             $("#username1").text("Bienvenido "+username);
             api.getSala(function (sala){
                 idsala=sala;
-                
-                connectAndSubscribe();
             }).then(function (){
                     api.getEquipo1(idsala,function (data){equipo(data,1);});
                     api.getEquipo2(idsala,function (data){equipo(data,2);});
+                    sessionStorage.setItem('idroom',idsala);
+                    connectAndSubscribe();
                     }
                 );
-            sessionStorage.setItem('idroom',idsala);
+            
             console.log(username);
         },
         addEquipo1: function () {
             sessionStorage.setItem('eq',"1");
-            api.addEquipo1(idsala,username);
+            api.addEquipo1(idsala,username).then(function(){$("#e2").prop('disabled', true);});
         },
         addEquipo2: function () {
             sessionStorage.setItem('eq',"2");
-            api.addEquipo2(idsala,username);
+            api.addEquipo2(idsala,username).then(function(){$("#e1").prop('disabled', true);});
         },
         disconnect: function () {
             if (stompClient !== null) {

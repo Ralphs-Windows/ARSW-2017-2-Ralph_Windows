@@ -26,6 +26,11 @@ public class ventana {
         this.estado = estado;
     }
     public ventana() { }
+    
+    public ventana(Ubicacion u,int e) { 
+        ubicacion= u;
+        this.estado = e;
+    }
 
     public Ubicacion getUbicacion() {
         return ubicacion;
@@ -37,7 +42,7 @@ public class ventana {
     public int getEstado(){
         return estado;
     };
-    public void setEStado(int e){
+    public void setEstado(int e){
         this.estado = e;
     };
 

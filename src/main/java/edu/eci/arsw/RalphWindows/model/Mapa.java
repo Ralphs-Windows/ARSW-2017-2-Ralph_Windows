@@ -16,12 +16,11 @@ public class Mapa {
      *Crear ventanas aleatorias con diferentes estados
      * @return Retorna una matriz con las fiferentes ventanas para reparar
      */
-    public static Tuple[][] dibujarMapa() {
-        Tuple [][] ventanas=new Tuple[10][5];
-        for (Tuple[] ventana : ventanas) {
+    public static ventana[][] dibujarMapa() {
+        ventana [][] ventanas=new ventana[10][5];
+        for (ventana[] ventana : ventanas) {
             for (int j = 0; j < ventana.length; j++) {
-                Tuple tuple=new Tuple<>((int) (Math.random()*4),(int) (Math.random()*4));
-                ventana[j] = tuple;
+                ventana[j] = new ventana(0,0,0,0,(int)(Math.random()*5));
             }
         }
         return ventanas;

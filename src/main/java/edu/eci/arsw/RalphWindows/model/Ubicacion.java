@@ -12,12 +12,19 @@ import java.awt.Rectangle;
  */
 public class Ubicacion{
     private int xpos, ypos, ancho, alto;
+    private Rectangle rectangulo;
 
     public Ubicacion(int x, int y, int width, int height) {
         xpos = y;
         ypos = x;
         ancho = width;
         alto = height;
+        rectangulo=new Rectangle(x,y,width,height);
+    }
+    public boolean colision(int x, int y, int width, int height) {
+        Rectangle temp = new Rectangle(x,y,width,height);
+        boolean tmp = rectangulo.intersects(temp);
+        return tmp;
     }
     /**
      * obtener posicion en x

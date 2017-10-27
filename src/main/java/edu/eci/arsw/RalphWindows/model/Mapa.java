@@ -20,7 +20,7 @@ public class Mapa {
         ventana [][] ventanas=new ventana[10][5];
         for (ventana[] ventana : ventanas) {
             for (int j = 0; j < ventana.length; j++) {
-                ventana[j] = new ventana(0,0,0,0,(int)(Math.random()*5));
+                ventana[j] = new ventana(0,0,0,0,4,(int)(Math.random()*4));
             }
         }
         return ventanas;

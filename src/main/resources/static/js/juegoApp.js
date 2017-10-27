@@ -17,12 +17,12 @@ juegoApp=(function (){
     var h=55;
     var w=70;
     var mirada=0;
-    var updatem=[];
+    var dir;
+    var num;
     function ventana(tupla,val){
         var canvas = document.getElementById("ventanas");
         var ctx = canvas.getContext("2d");
         var img = new Image();
-        img.src = "/img/ventana"+tupla.estado+"/"+Math.floor((Math.random()*3))+".png";
         img.onload = function () {
             tupla.ubicacion.xpos=vx;
             tupla.ubicacion.ypos=vy;
@@ -35,6 +35,7 @@ juegoApp=(function (){
                 vx=0;
             }
         };
+        img.src = "/img/ventana"+tupla.estado+"/"+tupla.num+".png";
         return tupla;
     }
     function map(mapa) {
@@ -43,16 +44,6 @@ juegoApp=(function (){
                 ventana(mapa[i][j], j === mapa[i].length - 1);
             }
         }
-    }
-    function mapinitial(mapa) {
-        for (var i = 0; i < mapa.length; i++) {
-            var lista= [];
-            for (var j = 0; j < mapa[i].length; j++) {
-                lista[j]=ventana(mapa[i][j], j === mapa[i].length - 1);
-            }
-            updatem[i]=lista;
-        }
-        
     }
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
@@ -73,8 +64,9 @@ juegoApp=(function (){
                 canvas.width=canvas.width;canvas.height=canvas.height;
                 map(ventanas);
             });
-            stompClient.subscribe("/topic/juego/."+idsala, function (data) {
-                map(JSON.parse(data.body));
+            stompClient.subscribe("/topic/juego/mapainit."+idsala, function (data) {
+                var ventanas=JSON.parse(data.body);
+                map(ventanas);
             });
             
         });
@@ -105,10 +97,25 @@ juegoApp=(function (){
         img2.onload = function () {
             ctx.drawImage(img2, canvas.width - h, canvas.height - w, h, w);
         };
+        if(eq==="1"){
+            posx=0;
+            posy=canvas.height - w;
+        }else if(eq==="2"){
+            posx=canvas.width - h;
+            posy=canvas.height - w;
+        }
     }
+    var pos=function () {
+        if(mirada>3){mirada=0;}
+        stompClient.send("/topic/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
+    };
     return{
         init:function(){
+            connectAndSubscribe();
+            alert("Oprima la tecla enter para empezar");
             eq=sessionStorage.getItem('eq');
+            num=sessionStorage.getItem('num');
+            console.info(eq+" "+num);
             idsala=sessionStorage.getItem('idroom');
             $(document).keydown(function (event) {
                 var keypress=event.keyCode;
@@ -116,30 +123,33 @@ juegoApp=(function (){
                 if(keypress===77){
                     
                 }
-                /*der*/
+                /*iz*/
                 else if(keypress===37){
-                    posx+=10;mirada+=1;
-                    stompClient.send("/topic/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":"R"+mirada}));
+                    posx-=15;mirada+=1;dir="L";
+                    pos();
                 }
                 /*up*/
                 else if(keypress===38){
-                    posy-=10;mirada=0;
-                    stompClient.send("/topic/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":"R"+mirada}));
+                    posy-=h;mirada=3;
+                    pos();
                 }
-                /*iz*/
+                /*der*/
                 else if(keypress===39){
-                    posx-=10;mirada-=1;
-                    stompClient.send("/topic/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":"L"+mirada}));
+                    posx+=15;mirada+=1;dir="R";
+                    pos();
                 }
                 /*down*/
                 else if(keypress===40){
-                    posy+=10;mirada=0;
-                    stompClient.send("/topic/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":"R"+mirada}));
+                    posy+=h;mirada=3;
+                    pos();
                 }
+                else if(keypress===13){
+                    api.getMapa(idsala,function (data){stompClient.send("/topic/juego/mapainit."+idsala,{},JSON.stringify(data));});
+                }   
             });
-            api.getMapa(idsala,mapinitial).then(function(){api.setMapa(idsala,updatem);});
+            /*api.getMapa(idsala,mapinitial).then(function(){api.setMapa(idsala,updatem);});*/
             felixinitial();
-            connectAndSubscribe();
+            
         }
     };
 })();

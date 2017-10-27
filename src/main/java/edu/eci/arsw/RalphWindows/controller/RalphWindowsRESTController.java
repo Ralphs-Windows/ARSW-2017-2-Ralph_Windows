@@ -44,6 +44,7 @@ public class RalphWindowsRESTController {
     public ResponseEntity<?> getMapa(@PathVariable String juegonum) {
         synchronized (RalphServices) {
         try {
+            
             return new ResponseEntity<>(RalphServices.getMapajuego(Integer.parseInt(juegonum)),HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,7 +54,7 @@ public class RalphWindowsRESTController {
     
     @RequestMapping(path = "/{juegonum}/updatemapajuego", method = RequestMethod.PUT)
     public ResponseEntity<?> updatetMapa(@PathVariable String juegonum, ventana[][] v) {
-        try {System.out.println("dfhhdh"+v[0][0]);
+        try {
             RalphServices.setMapajuego(Integer.parseInt(juegonum),v);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {

@@ -89,6 +89,7 @@ apiclient= (function() {
             });
             putpromise.then(
                     function () {
+                        
                         console.info("OK putEquipo1");
                         
                     },

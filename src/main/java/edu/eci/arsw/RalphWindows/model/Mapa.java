@@ -17,10 +17,10 @@ public class Mapa {
      * @return Retorna una matriz con las fiferentes ventanas para reparar
      */
     public static ventana[][] dibujarMapa() {
-        ventana [][] ventanas=new ventana[10][5];
+        ventana [][] ventanas=new ventana[9][5];
         for (ventana[] ventana : ventanas) {
             for (int j = 0; j < ventana.length; j++) {
-                ventana[j] = new ventana(0,0,0,0,4,(int)(Math.random()*4));
+                ventana[j] = new ventana(0,0,0,0,(int)(Math.random()*5),(int)(Math.random()*4));
             }
         }
         return ventanas;

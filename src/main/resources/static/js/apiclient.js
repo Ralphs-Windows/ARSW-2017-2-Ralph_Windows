@@ -20,11 +20,7 @@ apiclient= (function() {
             return getpromise;
         },
         setMapa: function (idsala,v){
-            for (var i = 0;i <v.length; i++) {
-                for (var j = 0; j < v[i].length; j++) {
-                }
-            }
-            console.log(JSON.stringify(v));
+           console.log(JSON.stringify(v));
            var putpromise =$.ajax({
                 url: "/juego/"+idsala+"/updatemapajuego",
                 type: 'PUT',

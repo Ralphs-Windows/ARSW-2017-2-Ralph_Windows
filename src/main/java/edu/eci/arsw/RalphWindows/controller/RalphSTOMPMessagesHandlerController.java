@@ -5,8 +5,12 @@ package edu.eci.arsw.RalphWindows.controller;
  * and open the template in the editor.
  */
 
+import edu.eci.arsw.RalphWindows.model.Equipo;
 import edu.eci.arsw.RalphWindows.model.Felix;
+import edu.eci.arsw.RalphWindows.model.LogicaJuego;
+import edu.eci.arsw.RalphWindows.model.ventana;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsService;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +31,31 @@ public class RalphSTOMPMessagesHandlerController{
     @Autowired
     RalphWindowsService services;
     
-    ConcurrentHashMap<String,ConcurrentLinkedQueue<String>> idrooms=new ConcurrentHashMap<>();
-    @MessageMapping("/mover.{idsala}")
-    public void mover(@DestinationVariable String idsala,Felix f) throws Exception {
-        msgt.convertAndSend("/topic/juego/mover."+idsala,f);
-    }
+    ConcurrentHashMap<String,LogicaJuego> idrooms=new ConcurrentHashMap<>();
     
-    @MessageMapping("/room.{id}")
-    public void getSalas(@DestinationVariable String id,String name) throws Exception {
-        System.err.println("nuevo usuario suscrito a la sala "+ id);
-        if (!idrooms.containsKey(id)) {
-            idrooms.put(id, new ConcurrentLinkedQueue<>());
+    @MessageMapping("/juego/mover.{idsala}")
+    public void mover(@DestinationVariable String idsala, Felix f) throws Exception {
+        System.out.println("Mover a felix numero "+f.getNum()+" del equipo "+f.getEq());
+        if (!idrooms.containsKey(idsala)) {
+            idrooms.put(idsala, new LogicaJuego(Integer.parseInt(idsala)));
         }
-        idrooms.get(id).add(name);
-        synchronized(msgt){
-            msgt.convertAndSend("/topic/room."+id,idrooms.get(id));
-            if (idrooms.get(id).size()== 2) {
-                msgt.convertAndSend("/topic/newpartida."+id, idrooms.get(id));
-                idrooms.remove(id);
-            }
+        LogicaJuego log=idrooms.get(idsala);
+        synchronized (msgt) {
+            msgt.convertAndSend("/topic/juego/mover." + idsala, log.mover(f));
+            msgt.convertAndSend("/topic/juego/estadojuego." + idsala, log.terminar());
+        }
+    }
+
+    @MessageMapping("/juego/reparar.{idsala}")
+    public void getSalas(@DestinationVariable String idsala,Felix f,ventana[][] v) throws Exception {
+        System.out.println("Felix numero "+f.getNum()+" repara la ventana");
+        if (!idrooms.containsKey(idsala)) {
+            idrooms.put(idsala, new LogicaJuego(Integer.parseInt(idsala)));
+        }
+        LogicaJuego log=idrooms.get(idsala);
+        synchronized (msgt) {
+            msgt.convertAndSend("/topic/juego/reparar." + idsala, log.reparar(f,v));
+            msgt.convertAndSend("/topic/juego/informacion." + idsala+"/eq."+f.getEq(), log.information(f.getEq()));
         }
     }
 }

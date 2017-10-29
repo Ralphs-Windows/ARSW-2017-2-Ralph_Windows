@@ -6,6 +6,7 @@
 package edu.eci.arsw.RalphWindows.model;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -15,11 +16,15 @@ public class Equipo {
     private String ideq;
     private int puntos=0;
     private int vida=3;
-    private ArrayList<Felix> felixs;
+    private ConcurrentHashMap<Integer,Felix> felixs;
     
     public Equipo(String id) {
         ideq=id;
-        felixs=new ArrayList<>();
+        felixs=new ConcurrentHashMap<>();
+    }
+    
+    public Equipo() {
+        felixs=new ConcurrentHashMap<>();
     }
     
     public int getPuntos() {
@@ -38,11 +43,11 @@ public class Equipo {
         this.vida = vida;
     }
 
-    public ArrayList<Felix> getFelixs() {
+    public ConcurrentHashMap<Integer,Felix> getFelixs() {
         return felixs;
     }
 
-    public void setFelixs(ArrayList<Felix> js) {
+    public void setFelixs(ConcurrentHashMap<Integer,Felix> js) {
         this.felixs = js;
     }
 

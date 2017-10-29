@@ -8,6 +8,7 @@ package edu.eci.arsw.RalphWindows.model;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,35 +22,47 @@ public class LogicaJuego {
     @Autowired
     RalphWindowsPersistence rph;
     
-    public LogicaJuego(int idsala,String eq1,String eq2) {
+    public LogicaJuego(int idsala) {
         id=idsala;
         equipos=new ConcurrentHashMap<>();
-        Equipo e1=new Equipo(eq1);
-        Equipo e2=new Equipo(eq2);
-        equipos.put(eq1,e1);
-        equipos.put(eq2,e2);
     }
     
-    public ArrayList<Equipo> mover(Felix jg){
-        ArrayList<Equipo> tmp=new ArrayList<>();
-        for(String k : equipos.keySet()){
-            tmp.add(equipos.get(k));
+    public ArrayList<Equipo> mover(Felix f){
+        Equipo eq;
+        if (!equipos.contains(f.getEq())) {
+            eq = new Equipo(f.getEq());
+            eq.getFelixs().put(f.getNum(), f);
+            equipos.put(f.getEq(), eq);
+        }else {
+            eq=equipos.get(f.getEq());
+            if (!eq.getFelixs().containsKey(f.getNum())) {
+                eq.getFelixs().put(f.getNum(), f);
+            }
         }
-        return tmp;
+        eq.getFelixs().get(f.getNum()).setUbicacion(f.getUbicacion());
+        ArrayList temp= new ArrayList<>();
+        for(String ide: equipos.keySet()){
+            eq=equipos.get(ide);
+            for(Integer idf: eq.getFelixs().keySet()){
+                temp.add(eq.getFelixs().get(idf));
+            }
+        }
+        return temp;
     }
-    public ventana[][] reparar(Felix jg) throws RalphWindowsPersistenceException {
+    public ventana[][] reparar(Felix jg,ventana[][] ventanas) throws RalphWindowsPersistenceException {
         Ubicacion u = jg.getUbicacion();
-        ventana[][] v = rph.getMapajuego(id);
-        for (ventana[] v1 : v) {
-            for (int j = 0; j < v1.length; j++) {
-                if (v1[j].getUbicacion().colision(u.getXpos(), u.getYpos(), u.getAncho(), u.getAlto())) {
-                    v1[j].setEstado(v1[j].getEstado() - 1);
+        //ventana[][] v = rph.getMapajuego(id);
+        for (ventana[] ventan: ventanas) {
+            for (int j = 0; j < ventan.length; j++) {
+                ventana v=ventan[j];
+                if (v.getUbicacion().colision(u.getXpos(), u.getYpos(), u.getAncho(), u.getAlto())) {
+                    v.setEstado(v.getEstado() - 1);
                     Equipo e = equipos.get(jg.getEq());
                     e.setPuntos(e.getPuntos() + 10);
                 }
             }
         }   
-        return rph.getMapajuego(id);
+        return ventanas;
     }
     public boolean terminar()throws RalphWindowsPersistenceException {
         int cont = 0;
@@ -64,6 +77,13 @@ public class LogicaJuego {
             }
         }
         return cont == nventanas;
+    }
+    public ArrayList information(String ideq) {
+        ArrayList<Integer> temp=new ArrayList<>();
+        Equipo eq=equipos.get(ideq);
+        temp.add(eq.getPuntos());
+        temp.add(eq.getVida());
+        return temp;
     }
     public ConcurrentHashMap<String, Equipo> getEquipos() {
         return equipos;

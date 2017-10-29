@@ -7,44 +7,43 @@
 
 var api=apiclient;
 juegoApp=(function (){
-    var vx=10;
-    var vy=0;
     var stompClient;
     var idsala;
     var eq;
     var posx;
     var posy;
-    var h=55;
-    var w=70;
     var mirada=0;
     var dir;
     var num;
-    function ventana(tupla,val){
-        var canvas = document.getElementById("ventanas");
-        var ctx = canvas.getContext("2d");
+    var h=70;
+    var w=55;
+    var mapanew;
+    function ventana(xp,yp,srcc,ctx){
         var img = new Image();
+        img.src = srcc;
         img.onload = function () {
-            tupla.ubicacion.xpos=vx;
-            tupla.ubicacion.ypos=vy;
-            tupla.ubicacion.ancho=img.width;
-            tupla.ubicacion.alto=img.height;
-            ctx.drawImage(img,vx, vy);
-            vx+=canvas.width/5;
-            if(val){
-                vy+=img.height;
-                vx=0;
-            }
+            ctx.drawImage(img,xp, yp);
         };
-        img.src = "/img/ventana"+tupla.estado+"/"+tupla.num+".png";
-        return tupla;
+        
     }
     function map(mapa) {
+        var vx=0;
+        var vy=0;
+        var canvas = document.getElementById("ventanas");
+        var ctx = canvas.getContext("2d");
+        mapanew=[];
         for (var i = 0; i < mapa.length; i++) {
+            vx=0;var lista=[];
             for (var j = 0; j < mapa[i].length; j++) {
-                ventana(mapa[i][j], j === mapa[i].length - 1);
+                new ventana(vx,vy, "/img/ventana"+mapa[i][j].estado+"/"+mapa[i][j].num+".png",ctx);
+                vx+=canvas.width/mapa[j].length;
+                lista[j]=mapa[i][j];
             }
+            vy+=canvas.height/mapa.length;
+            mapanew[i]=lista;
         }
     }
+    
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS("/stompendpoint");
@@ -52,10 +51,12 @@ juegoApp=(function (){
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe("/topic/juego/mover."+idsala, function (data) {
-                var a=JSON.parse(data.body);
+                var felixs=JSON.parse(data.body);
                 var canvas = document.getElementById("pjs");
                 canvas.width=canvas.width;canvas.height=canvas.height;
-                felix(a.ubicacion,a.eq,a.dir);
+                felixs.map(function (f){
+                    new felix(f.ubicacion.xpos,f.ubicacion.ypos,w,h,"img/personajes/felix"+f.eq+f.dir+".png");
+                });
                 
             });
             stompClient.subscribe("/topic/juego/reparar."+idsala, function (data) {
@@ -64,68 +65,64 @@ juegoApp=(function (){
                 canvas.width=canvas.width;canvas.height=canvas.height;
                 map(ventanas);
             });
-            stompClient.subscribe("/topic/juego/mapainit."+idsala, function (data) {
-                var ventanas=JSON.parse(data.body);
-                map(ventanas);
+            stompClient.subscribe("/topic/juego/informacion."+idsala+"/eq."+eq, function (data) {
+                var info=JSON.parse(data.body);
+                alert(info);
+                
             });
-            
+             stompClient.subscribe("/topic/juego/estadojuego."+idsala, function (data) {
+                var terminado=JSON.parse(data.body);
+                if(terminado){
+                    alert("fin del juego");
+                }
+            });
+            felixinitial();
         });
+        
     };
-    function felix(ubicacion,eq,mirada){
+    
+    function felix(xp,yp,h,w,srcc){
         var canvas = document.getElementById("pjs");
         var ctx = canvas.getContext("2d");
         var img = new Image();
-        if (eq === "1") {
-            img.src = "/img/personajes/felix1"+mirada+".png";
-        } else if(eq==="2") {
-            img.src = "/img/personajes/felix"+mirada+".png";
-        }
+        img.src =srcc;
         img.onload = function () {
-            ctx.drawImage(img,ubicacion.xpos,ubicacion.ypos,ubicacion.alto,ubicacion.ancho);
+            ctx.drawImage(img,xp,yp,h,w);
         };
     }
     function felixinitial() {
         var canvas = document.getElementById("pjs");
-        var ctx = canvas.getContext("2d");
-        var img = new Image();
-        var img2 = new Image();
-        img.src = "/img/personajes/felix1R" + mirada + ".png";
-        img2.src = "/img/personajes/felixL" + mirada + ".png";
-        img.onload = function () {
-            ctx.drawImage(img, 0, canvas.height - w, h, w);
-        };
-        img2.onload = function () {
-            ctx.drawImage(img2, canvas.width - h, canvas.height - w, h, w);
-        };
         if(eq==="1"){
-            posx=0;
-            posy=canvas.height - w;
+            posx=0;dir="R";
+            posy=canvas.height - h;
         }else if(eq==="2"){
-            posx=canvas.width - h;
-            posy=canvas.height - w;
+            posx=canvas.width - w;dir="L";
+            posy=canvas.height - h;
         }
+        pos();
     }
     var pos=function () {
         if(mirada>3){mirada=0;}
-        stompClient.send("/topic/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
+        stompClient.send("/app/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
+    };
+    var repare = function (){
+        stompClient.send("/app/juego/reparar."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}),JSON.stringify(mapanew));
     };
     return{
-        init:function(){
-            connectAndSubscribe();
-            alert("Oprima la tecla enter para empezar");
+        init: function () {
             eq=sessionStorage.getItem('eq');
             num=sessionStorage.getItem('num');
-            console.info(eq+" "+num);
             idsala=sessionStorage.getItem('idroom');
+            connectAndSubscribe();
             $(document).keydown(function (event) {
                 var keypress=event.keyCode;
                 /*repare*/
                 if(keypress===77){
-                    
+                    repare();
                 }
                 /*iz*/
                 else if(keypress===37){
-                    posx-=15;mirada+=1;dir="L";
+                    posx-=8;mirada+=1;dir="L";
                     pos();
                 }
                 /*up*/
@@ -135,7 +132,7 @@ juegoApp=(function (){
                 }
                 /*der*/
                 else if(keypress===39){
-                    posx+=15;mirada+=1;dir="R";
+                    posx+=8;mirada+=1;dir="R";
                     pos();
                 }
                 /*down*/
@@ -143,13 +140,8 @@ juegoApp=(function (){
                     posy+=h;mirada=3;
                     pos();
                 }
-                else if(keypress===13){
-                    api.getMapa(idsala,function (data){stompClient.send("/topic/juego/mapainit."+idsala,{},JSON.stringify(data));});
-                }   
             });
-            /*api.getMapa(idsala,mapinitial).then(function(){api.setMapa(idsala,updatem);});*/
-            felixinitial();
-            
+            api.getMapa(idsala,map)/*.then(function(){api.setMapa(idsala,mapanew);})*/;
         }
     };
 })();

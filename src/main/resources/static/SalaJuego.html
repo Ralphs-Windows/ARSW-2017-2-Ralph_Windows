@@ -20,9 +20,47 @@ and open the template in the editor.
         <script src="js/juegoApp.js"></script>
     </head>
     <body onload="juegoApp.init()" style="background-color: black;">
-        <div style="background:url('img/FondoPartida.jpg');position: absolute;left:27%;width: 45%;height: 910px;text-align: center">
-            <canvas height="900px" width="350px" id="ventanas" style="border:1px solid #B40404;position: absolute;right: 35%"></canvas>
-            <canvas height="900px" width="350px" id="pjs" style="border:1px solid #B40404;position: absolute;right: 35%"></canvas>
+        <div id="ieq1" style="position: absolute;left: 20%">
+            <h2>Equipo 1</h2>
+            <table>
+                <thead >
+                    <tr >
+                        <th style="text-align: left">VIDAS</th>
+                        <td Id="vidas" >0</td>
+                    </tr>
+                    <tr >
+                        <th style="text-align: left">PUNTOS</th>
+                        <td Id="puntos" >0</td>
+                    </tr>
+                    <tr >
+                        <th style="text-align: left">VENTANAS REPARADAS</th>
+                        <td Id="vn" >0</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div id="ieq2" style="position: absolute;right:20%">
+            <h2>Equipo 2</h2>
+            <table>
+                <thead >
+                    <tr >
+                        <th style="text-align: left">VIDAS</th>
+                        <td Id="vidas" >0</td>
+                    </tr>
+                    <tr >
+                        <th style="text-align: left">PUNTOS</th>
+                        <td Id="puntos" >0</td>
+                    </tr>
+                    <tr >
+                        <th style="text-align: left">VENTANAS REPARADAS</th>
+                        <td Id="vn" >0</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="background:url('img/FondoPartida.jpg');position: absolute;left:31%;width: 39%;height: 910px;text-align: center">
+            <canvas height="835px" width="350px" id="ventanas" style="border:1px solid #B40404;position: absolute;left:26%"></canvas>
+            <canvas height="900px" width="350px" id="pjs" style="border:1px solid #B40404;position: absolute;left:26%"></canvas>
         </div>
     </body>
 </html>

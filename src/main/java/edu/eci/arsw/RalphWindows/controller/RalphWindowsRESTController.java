@@ -48,7 +48,7 @@ public class RalphWindowsRESTController {
             return new ResponseEntity<>(RalphServices.getMapajuego(Integer.parseInt(juegonum)),HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error no se ecuentra la sala"+juegonum, HttpStatus.BAD_REQUEST);
         }}
     }
     
@@ -59,7 +59,7 @@ public class RalphWindowsRESTController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error no se ecuentra la sala"+juegonum,HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -153,7 +153,7 @@ public class RalphWindowsRESTController {
             return new ResponseEntity<>(RalphServices.getSalaDisponible(), HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("/{juegonum}/ debe ser un valor numerico.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Hay un error al llamar al metodo get de sala disponible", HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -15,6 +15,7 @@ public class Felix{
     private String eq;
     private String dir;
     private int num;
+    private int puntos=0;
     
     public Felix(int x, int y, int w, int h,String eq,String r,int num) {
         ubicacion=new Ubicacion(x, y, w, h);
@@ -56,6 +57,14 @@ public class Felix{
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
     
     

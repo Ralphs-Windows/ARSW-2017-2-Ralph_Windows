@@ -6,8 +6,8 @@
 package edu.eci.arsw.RalphWindows.persistence;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
-import edu.eci.arsw.RalphWindows.model.Tuple;
-import edu.eci.arsw.RalphWindows.model.ventana;
+import edu.eci.arsw.RalphWindows.model.Mapa;
+import edu.eci.arsw.RalphWindows.model.SalaJuego;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -25,17 +25,17 @@ public interface RalphWindowsPersistence {
      * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
      *
      */
-    public ventana[][] getMapajuego(int idsala) throws RalphWindowsPersistenceException;
+    public Mapa getMapajuego(int idsala) throws RalphWindowsPersistenceException;
     
     /**
      * Cambia las posiciones de las ventanas respectivamente a la parte visual
      *
      * @param juegonum
-     * @param v
+     * @param mp
      * @throws
      * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
      */
-    public void setMapajuego(int juegonum, ventana[][] v) throws RalphWindowsPersistenceException;
+    public void setMapajuego(int juegonum, Mapa mp) throws RalphWindowsPersistenceException;
     /**
      * Retorna el equipo1 de la sala de juego
      *
@@ -83,5 +83,12 @@ public interface RalphWindowsPersistence {
      */
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException;
 
-    
+     /**
+     * Retorna la sala de juego disponible actual para registrar jugadores
+     *
+     * @param id
+     * @return  el id de la sala disponible
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     */
+    public SalaJuego getSalas(int id) throws RalphWindowsPersistenceException;
 }

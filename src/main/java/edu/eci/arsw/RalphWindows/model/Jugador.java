@@ -11,17 +11,30 @@ package edu.eci.arsw.RalphWindows.model;
  */
 public class Jugador {
     String username;
-    
+    /**
+     * 
+     * @param nombre 
+     */
     public Jugador(String nombre){
         this.username=nombre;
     }
+    /**
+     * 
+     */
     public Jugador(){
         username="";
     }
-
+    /**
+     * 
+     * @return 
+     */
     public String getUsername() {
         return username;
     }
+    /**
+     * 
+     * @param nombre
+     */
     public void setUsername (String nombre){
         username=nombre;
     }

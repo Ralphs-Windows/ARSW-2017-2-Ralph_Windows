@@ -19,12 +19,11 @@ apiclient= (function() {
             );
             return getpromise;
         },
-        setMapa: function (idsala,v){
-           console.log(JSON.stringify(v));
-           var putpromise =$.ajax({
-                url: "/juego/"+idsala+"/updatemapajuego",
+        setMapa: function (idsala, mapav) {
+            var putpromise = $.ajax({
+                url: "/juego/" + idsala + "/updatemapajuego",
                 type: 'PUT',
-                data: JSON.stringify(v),
+                data: JSON.stringify(mapav),
                 contentType: "application/json"
             });
             putpromise.then(
@@ -37,12 +36,12 @@ apiclient= (function() {
             );
             return putpromise;
         },
-        getSala:function (callback){ 
-            var getpromise = $.get("/juego/Sala",callback);
+        getSala: function (callback) {
+            var getpromise = $.get("/juego/Sala", callback);
             getpromise.then(
                     function () {
                         console.info("OK getSalaDisponible");
-                        
+
                     },
                     function () {
                         alert("Error getSalaDisponible");

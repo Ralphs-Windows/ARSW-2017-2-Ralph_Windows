@@ -6,6 +6,7 @@
 package edu.eci.arsw.RalphWindows.controller;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
+import edu.eci.arsw.RalphWindows.model.Mapa;
 import edu.eci.arsw.RalphWindows.model.ventana;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsException;
@@ -53,9 +54,9 @@ public class RalphWindowsRESTController {
     }
     
     @RequestMapping(path = "/{juegonum}/updatemapajuego", method = RequestMethod.PUT)
-    public ResponseEntity<?> updatetMapa(@PathVariable String juegonum, ventana[][] v) {
+    public ResponseEntity<?> updateMapa(@PathVariable String juegonum,@RequestBody Mapa mp) {
         try {
-            RalphServices.setMapajuego(Integer.parseInt(juegonum),v);
+            RalphServices.getMapajuego(Integer.parseInt(juegonum)).setVentanas(mp.getVentanas());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);

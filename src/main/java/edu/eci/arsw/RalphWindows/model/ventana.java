@@ -29,33 +29,65 @@ public class ventana {
         this.num=num;
     }
     public ventana() { }
-    
+    /**
+     * 
+     * @param u
+     * @param e
+     * @param num
+     */
     public ventana(Ubicacion u,int e,int num) { 
         ubicacion= u;
         this.estado = e;
         this.num=num;
     }
-
+    /**
+     * 
+     * @return 
+     */
     public Ubicacion getUbicacion() {
         return ubicacion;
     }
-
+    /**
+     * 
+     * @param ubicacion
+     */
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
+    /**
+     * 
+     * @return 
+     */
     public int getEstado(){
         return estado;
     };
+    /**
+     * 
+     * @param e
+     */
     public void setEstado(int e){
         this.estado = e;
     };
-
+    /**
+     * 
+     * @return 
+     */
     public int getNum() {
         return num;
     }
-
+    /**
+    *obtener string de la clase
+    * @param num
+    */
     public void setNum(int num) {
         this.num = num;
     }
-    
+    /**
+    *obtener string de la clase
+     * @return 
+    */
+    @Override
+    public String toString(){
+        return "{estado: "+estado+", num: "+num+", ubicacion: "+ubicacion.toString()+"}";
+    }
 }

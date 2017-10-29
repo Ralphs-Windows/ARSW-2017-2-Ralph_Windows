@@ -17,12 +17,14 @@ juegoApp=(function (){
     var num;
     var h=70;
     var w=55;
+    var vh=51;
+    var vw=82;
     var mapanew;
     function ventana(xp,yp,srcc,ctx){
         var img = new Image();
         img.src = srcc;
         img.onload = function () {
-            ctx.drawImage(img,xp, yp);
+            ctx.drawImage(img,xp, yp,vh,vw);
         };
         
     }
@@ -31,16 +33,17 @@ juegoApp=(function (){
         var vy=0;
         var canvas = document.getElementById("ventanas");
         var ctx = canvas.getContext("2d");
-        mapanew=[];
         for (var i = 0; i < mapa.length; i++) {
-            vx=0;var lista=[];
+            vx=0;
             for (var j = 0; j < mapa[i].length; j++) {
                 new ventana(vx,vy, "/img/ventana"+mapa[i][j].estado+"/"+mapa[i][j].num+".png",ctx);
-                vx+=canvas.width/mapa[j].length;
-                lista[j]=mapa[i][j];
+                mapa[i][j].ubicacion.xpos=vx;
+                mapa[i][j].ubicacion.ypos=vy;
+                mapa[i][j].ubicacion.alto=82;
+                mapa[i][j].ubicacion.ancho=51;
+                vx+=Math.round(canvas.width/mapa[j].length);
             }
-            vy+=canvas.height/mapa.length;
-            mapanew[i]=lista;
+            vy+=Math.round(canvas.height/mapa.length);
         }
     }
     
@@ -106,7 +109,7 @@ juegoApp=(function (){
         stompClient.send("/app/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
     };
     var repare = function (){
-        stompClient.send("/app/juego/reparar."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}),JSON.stringify(mapanew));
+        stompClient.send("/app/juego/reparar."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
     };
     return{
         init: function () {
@@ -141,7 +144,7 @@ juegoApp=(function (){
                     pos();
                 }
             });
-            api.getMapa(idsala,map)/*.then(function(){api.setMapa(idsala,mapanew);})*/;
+            api.getMapa(idsala,function(mapa){mapanew=mapa;map(mapa.ventanas);}).then(function(){api.setMapa(idsala,mapanew);});
         }
     };
 })();

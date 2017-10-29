@@ -21,9 +21,13 @@ public class Ubicacion{
         alto = height;
         rectangulo=new Rectangle(x,y,width,height);
     }
+    public Ubicacion(){}
+    
     public boolean colision(int x, int y, int width, int height) {
         Rectangle temp = new Rectangle(x,y,width,height);
+        System.out.println("colision"+temp+rectangulo);
         boolean tmp = rectangulo.intersects(temp);
+        System.out.println("colision"+tmp+temp);
         return tmp;
     }
     /**
@@ -39,6 +43,7 @@ public class Ubicacion{
      */
     public void setXpos(int xpos) {
         this.xpos = xpos;
+        rectangulo=new Rectangle(xpos,ypos,ancho,alto);
     }
    /**
      * obtener posicion en y
@@ -53,6 +58,7 @@ public class Ubicacion{
      */
     public void setYpos(int ypos) {
         this.ypos = ypos;
+        rectangulo=new Rectangle(xpos,this.ypos,ancho,alto);
     }
     /**
      * obtener  ancho
@@ -67,6 +73,7 @@ public class Ubicacion{
      */
     public void setAncho(int ancho) {
         this.ancho = ancho;
+        rectangulo=new Rectangle(xpos,ypos,this.ancho,alto);
     }
     /**
      * cambiar el alto
@@ -82,8 +89,10 @@ public class Ubicacion{
      */
     public void setAlto(int alto) {
         this.alto = alto;
+        rectangulo=new Rectangle(xpos,ypos,ancho,this.alto);
     }
-    /*obtener string d ela clase
+    
+    /*obtener string de la clase
      */
     @Override
     public String toString(){

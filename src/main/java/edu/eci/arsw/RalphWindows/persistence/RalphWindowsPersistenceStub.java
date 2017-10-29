@@ -8,8 +8,6 @@ package edu.eci.arsw.RalphWindows.persistence;
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
 import edu.eci.arsw.RalphWindows.model.SalaJuego;
-import edu.eci.arsw.RalphWindows.model.Tuple;
-import edu.eci.arsw.RalphWindows.model.ventana;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.stereotype.Service;
@@ -30,13 +28,13 @@ public class RalphWindowsPersistenceStub implements RalphWindowsPersistence {
     }
 
     @Override
-    public ventana[][] getMapajuego(int juegonum) throws RalphWindowsPersistenceException {
-        return DatosSalas.get(juegonum).getMapaventanas();
+    public Mapa getMapajuego(int juegonum) throws RalphWindowsPersistenceException {
+        return DatosSalas.get(juegonum).getMapaJuego();
     }
     
     @Override
-    public void setMapajuego(int juegonum, ventana[][] v) {
-        DatosSalas.get(juegonum).setMapaventanas(v);
+    public void setMapajuego(int juegonum, Mapa m) {
+        DatosSalas.get(juegonum).setMapaJuego(m);
     }
     
     @Override
@@ -70,5 +68,10 @@ public class RalphWindowsPersistenceStub implements RalphWindowsPersistence {
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException {
         DatosSalas.put(sala, new SalaJuego());
         this.sala = sala;
+    }
+
+    @Override
+    public SalaJuego getSalas(int id) throws RalphWindowsPersistenceException {
+        return DatosSalas.get(id);
     }
 }

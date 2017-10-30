@@ -44,7 +44,7 @@ public class RalphSTOMPMessagesHandlerController{
             /*Revisa si la ventana puede ser reparada*/
             log.reparar(idsala,f);
             /*Revisa si se repraron todas la ventanas*/
-            msgt.convertAndSend("/topic/juego/estadojuego."+idsala, log.infoWinner(idsala));
+            
             if(log.terminar(idsala)){
                 /*Si si se han reparado todas las ventanas, se envia informacion de fin de juego*/
                 msgt.convertAndSend("/topic/juego/estadojuego."+idsala, log.infoWinner(idsala));

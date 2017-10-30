@@ -16,6 +16,7 @@ public class Felix{
     private String dir;
     private int num;
     private int puntos=0;
+    private String nombre;
     
     /**
      * 
@@ -109,6 +110,16 @@ public class Felix{
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
     
     
     

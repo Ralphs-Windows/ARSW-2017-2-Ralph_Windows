@@ -45,7 +45,6 @@ public class RalphWindowsRESTController {
     public ResponseEntity<?> getMapa(@PathVariable String juegonum) {
         synchronized (RalphServices) {
         try {
-            
             return new ResponseEntity<>(RalphServices.getMapajuego(Integer.parseInt(juegonum)),HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);

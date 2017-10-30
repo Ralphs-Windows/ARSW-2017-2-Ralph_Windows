@@ -9,7 +9,9 @@ package edu.eci.arsw.RalphWindows.model;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class LogicaJuego {
     @Autowired
     RalphWindowsPersistence rph=null;
+    @Autowired
+    SimpMessagingTemplate msgt;
     
     /**
      * 
@@ -36,8 +40,7 @@ public class LogicaJuego {
     public ArrayList<Equipo> mover(int id,Felix f) throws RalphWindowsPersistenceException{
         Equipo eq;
         SalaJuego s=rph.getSalas(id);
-        
-        if (!s.getEquipos().contains(f.getEq())) {
+        if (!s.getEquipos().containsKey(f.getEq())) {
             eq = new Equipo(f.getEq());
             eq.getFelixs().put(f.getNum(), f);
             s.getEquipos().put(f.getEq(), eq);
@@ -47,6 +50,7 @@ public class LogicaJuego {
                 eq.getFelixs().put(f.getNum(), f);
             }
         }
+        eq.getFelixs().get(f.getNum()).setDir(f.getDir());
         eq.getFelixs().get(f.getNum()).setUbicacion(f.getUbicacion());
         ArrayList temp= new ArrayList<>();
         for(String ide: s.getEquipos().keySet()){
@@ -61,10 +65,9 @@ public class LogicaJuego {
      * 
      * @param id
      * @param jg
-     * @return 
      * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
      */
-    public ventana[][] reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
+    public void reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
         Ubicacion u = jg.getUbicacion();
         SalaJuego s=rph.getSalas(id);
         ventana[][] ventanas = rph.getMapajuego(id).getVentanas();
@@ -72,13 +75,17 @@ public class LogicaJuego {
             for (int j = 0; j < ventan.length; j++) {
                 ventana v=ventan[j];
                 if (v.getUbicacion().colision(u.getXpos(), u.getYpos(), u.getAncho(), u.getAlto())) {
-                    v.setEstado(v.getEstado() - 1);
-                    Equipo e =s.getEquipos().get(jg.getEq());
-                    e.setPuntos(e.getPuntos() + 10);
+                    if(v.getEstado()!=0){
+                        v.setEstado(v.getEstado() - 1);
+                        Equipo e =s.getEquipos().get(jg.getEq());
+                        int p=e.getFelixs().get(jg.getNum()).getPuntos();
+                        e.getFelixs().get(jg.getNum()).setPuntos(p+10);
+                        e.setPuntos(e.getPuntos() + 10);
+                        msgt.convertAndSend("/topic/juego/reparar." + id, ventanas);
+                    }
                 }
             }
         }   
-        return ventanas;
     }
     /**
      * 
@@ -100,18 +107,36 @@ public class LogicaJuego {
         }
         return cont == nventanas;
     }
+    
     /**
      * 
      * @param id
-     * @param ideq
      * @return 
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
      */
-    public ArrayList information(int id,String ideq) throws RalphWindowsPersistenceException {
+    public ArrayList<Equipo> infoWinner(int id)throws RalphWindowsPersistenceException {
+        SalaJuego s=rph.getSalas(id);
+        ArrayList<Equipo> eqps=new ArrayList<>();
+        for (String key : s.getEquipos().keySet()) {
+            eqps.add(s.getEquipos().get(key));
+        }
+        return eqps;
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param f
+     * @return 
+     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
+     */
+    public ArrayList information(int id,Felix f) throws RalphWindowsPersistenceException {
         SalaJuego s=rph.getSalas(id);
         ArrayList<Integer> temp=new ArrayList<>();
-        Equipo eq=s.getEquipos().get(ideq);
+        Equipo eq=s.getEquipos().get(f.getEq());
         temp.add(eq.getPuntos());
         temp.add(eq.getVida());
+        temp.add(eq.getPuntos()/10);
         return temp;
     }
     

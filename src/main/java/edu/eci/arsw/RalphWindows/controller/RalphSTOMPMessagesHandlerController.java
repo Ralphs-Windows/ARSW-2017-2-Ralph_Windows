@@ -30,27 +30,28 @@ public class RalphSTOMPMessagesHandlerController{
     
     @MessageMapping("/juego/mover.{idsala}")
     public void mover(@DestinationVariable int idsala, Felix f) throws Exception {
-        System.out.println("Mover a felix numero "+f.getNum()+" del equipo "+f.getEq());
-        /*if (!idrooms.containsKey(idsala)) {
-            idrooms.put(idsala, new LogicaJuego(Integer.parseInt(idsala)));
-        }
-        LogicaJuego log=idrooms.get(idsala);*/
+        /*System.out.println("Mover a felix numero "+f.getNum()+" del equipo "+f.getEq());*/
         synchronized (msgt) {
+            /*Se envia informacion de todos los jugadores al moverse*/
             msgt.convertAndSend("/topic/juego/mover." + idsala, log.mover(idsala,f));
         }
     }
 
     @MessageMapping("/juego/reparar.{idsala}")
     public void getSalas(@DestinationVariable int idsala,Felix f) throws Exception {
-        System.out.println("Felix numero "+f.getNum()+" repara la ventana");
-        /*if (!idrooms.containsKey(idsala)) {
-            idrooms.put(idsala, new LogicaJuego(Integer.parseInt(idsala)));
-        }
-        LogicaJuego log=idrooms.get(idsala);*/
+        /*System.out.println("Felix numero "+f.getNum()+" repara la ventana");*/
         synchronized (msgt) {
-            msgt.convertAndSend("/topic/juego/reparar." + idsala, log.reparar(idsala,f));
-            msgt.convertAndSend("/topic/juego/informacion."+idsala+"/eq."+f.getEq(), log.information(idsala,f.getEq()));
-            msgt.convertAndSend("/topic/juego/estadojuego."+idsala, log.terminar(idsala));
+            /*Revisa si la ventana puede ser reparada*/
+            log.reparar(idsala,f);
+            /*Revisa si se repraron todas la ventanas*/
+            msgt.convertAndSend("/topic/juego/estadojuego."+idsala, log.infoWinner(idsala));
+            if(log.terminar(idsala)){
+                /*Si si se han reparado todas las ventanas, se envia informacion de fin de juego*/
+                msgt.convertAndSend("/topic/juego/estadojuego."+idsala, log.infoWinner(idsala));
+            }else{
+                /*Si el juego aun no termina se envia informacion de puntos y vidas.*/
+                msgt.convertAndSend("/topic/juego/informacion."+idsala+"/eq."+f.getEq(), log.information(idsala,f));
+            }
         }
     }
 }

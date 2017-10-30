@@ -9,7 +9,7 @@ ingresarApp= (function() {
     return{
         saveName: function (){
             username=document.getElementById('usuarioid').value;
-            if(username!==""){
+            if(username!=="" && username!==null){
                 sessionStorage.setItem('username', document.getElementById('usuarioid').value);
             }else{
                 Error("Digite un nombre valido el nombre digitado es: "+username);

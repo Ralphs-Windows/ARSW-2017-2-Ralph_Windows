@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* global apiclient, idsala, Stomp */
+/* global apiclient, idsala, Stomp, pt, info */
 
 var api=apiclient;
 juegoApp=(function (){
     var stompClient;
+    var username;
     var idsala;
     var eq;
     var posx;
@@ -70,72 +71,100 @@ juegoApp=(function (){
             });
             stompClient.subscribe("/topic/juego/informacion."+idsala+"/eq."+eq, function (data) {
                 var info=JSON.parse(data.body);
-                alert(info);
+                $("#"+eq+"puntos").text(info[0]);
+                $("#"+eq+"vn").text(info[2]);
+                $("#" + eq + "vidas").src = "/img/vida"+info[1]+".png";
                 
             });
-             stompClient.subscribe("/topic/juego/estadojuego."+idsala, function (data) {
+            stompClient.subscribe("/topic/juego/estadojuego."+idsala, function (data) {
                 var terminado=JSON.parse(data.body);
-                if(terminado){
-                    alert("fin del juego");
-                }
+                var div1=document.getElementById('juego');
+                var div2=document.getElementById('finjuego');
+                div1.style.display="none";
+                div2.style.display="block";
+                var equipoganador;
+                terminado.map(function (eqs) {
+                    for (var i = 0; i < terminado.length; i++) {
+                        if (eqs.puntos>terminado[i].puntos) {
+                            equipoganador = eqs;
+                        }else if(eqs.puntos<terminado[i].puntos){
+                            equipoganador = terminado[i];
+                        }
+                    }
+                });
+                var equipo=equipoganador.ideq;
+                document.getElementById('ganadorimg').src="img/personajes/felix"+equipo.toString()+"R0.png";
+                $("#puntos").text(equipoganador.puntos);
+                $("#vn").text(equipoganador.puntos/10);
+                
             });
             felixinitial();
         });
-        
+
     };
-    
-    function felix(xp,yp,h,w,srcc){
+
+    function felix(xp, yp, h, w, srcc) {
         var canvas = document.getElementById("pjs");
         var ctx = canvas.getContext("2d");
         var img = new Image();
-        img.src =srcc;
+        img.src = srcc;
         img.onload = function () {
-            ctx.drawImage(img,xp,yp,h,w);
+            ctx.drawImage(img, xp, yp, h, w);
         };
     }
     function felixinitial() {
         var canvas = document.getElementById("pjs");
-        if(eq==="1"){
-            posx=0;dir="R";
-            posy=canvas.height - h;
-        }else if(eq==="2"){
-            posx=canvas.width - w;dir="L";
-            posy=canvas.height - h;
+        if (eq === "1") {
+            posx = 0;
+            dir = "R";
+            posy = canvas.height - h;
+        } else if (eq === "2") {
+            posx = canvas.width - w;
+            dir = "L";
+            posy = canvas.height - h;
         }
         pos();
     }
-    var pos=function () {
-        if(mirada>3){mirada=0;}
-        stompClient.send("/app/juego/mover."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
+    var pos = function () {
+        if (mirada > 3) {
+            mirada = 0;
+        }
+        stompClient.send("/app/juego/mover." + idsala, {}, JSON.stringify({"ubicacion": {"xpos": posx, "ypos": posy, "ancho": w, "alto": h}, "eq": eq, "dir": dir + mirada, "num": num,"nombre":username}));
     };
-    var repare = function (){
-        stompClient.send("/app/juego/reparar."+idsala,{},JSON.stringify({"ubicacion":{"xpos":posx,"ypos":posy,"ancho":w,"alto":h},"eq":eq,"dir":dir+mirada,"num":num}));
+    var repare = function () {
+        stompClient.send("/app/juego/reparar." + idsala, {}, JSON.stringify({"ubicacion": {"xpos": posx, "ypos": posy, "ancho": w, "alto": h}, "eq": eq, "dir": dir + mirada, "num": num}));
     };
     return{
         init: function () {
-            eq=sessionStorage.getItem('eq');
-            num=sessionStorage.getItem('num');
-            idsala=sessionStorage.getItem('idroom');
+            username = sessionStorage.getItem('username');
+            eq = sessionStorage.getItem('eq');
+            num = sessionStorage.getItem('num');
+            idsala = sessionStorage.getItem('idroom');
             connectAndSubscribe();
             $(document).keydown(function (event) {
-                var keypress=event.keyCode;
+                var keypress = event.keyCode;
                 /*repare*/
-                if(keypress===77){
+                if (keypress === 77) {
                     repare();
                 }
                 /*iz*/
-                else if(keypress===37){
-                    posx-=8;mirada+=1;dir="L";
+                else if (keypress === 37) {
+                    posx -= 8;
+                    mirada += 1;
+                    dir = "L";
                     pos();
                 }
                 /*up*/
-                else if(keypress===38){
-                    posy-=h;mirada=3;
+                else if (keypress === 38) {
+                    posy -= h;
+                    mirada = 3;
                     pos();
                 }
                 /*der*/
-                else if(keypress===39){
-                    posx+=8;mirada+=1;dir="R";
+                else if (keypress === 39) {
+                    posx += 8;
+                    mirada += 1;
+                    dir = "R";
                     pos();
                 }
                 /*down*/

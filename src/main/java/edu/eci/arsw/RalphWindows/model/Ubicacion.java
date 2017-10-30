@@ -25,9 +25,7 @@ public class Ubicacion{
     
     public boolean colision(int x, int y, int width, int height) {
         Rectangle temp = new Rectangle(x,y,width,height);
-        System.out.println("colision"+temp+rectangulo);
         boolean tmp = rectangulo.intersects(temp);
-        System.out.println("colision"+tmp+temp);
         return tmp;
     }
     /**

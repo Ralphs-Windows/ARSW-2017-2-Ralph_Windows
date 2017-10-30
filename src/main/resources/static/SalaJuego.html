@@ -19,48 +19,81 @@ and open the template in the editor.
         <script src="js/apiclient.js"></script>
         <script src="js/juegoApp.js"></script>
     </head>
-    <body onload="juegoApp.init()" style="background-color: black;">
-        <div id="ieq1" style="position: absolute;left: 20%">
-            <h2>Equipo 1</h2>
-            <table>
-                <thead >
-                    <tr >
-                        <th style="text-align: left">VIDAS</th>
-                        <td Id="vidas" >0</td>
-                    </tr>
-                    <tr >
-                        <th style="text-align: left">PUNTOS</th>
-                        <td Id="puntos" >0</td>
-                    </tr>
-                    <tr >
-                        <th style="text-align: left">VENTANAS REPARADAS</th>
-                        <td Id="vn" >0</td>
-                    </tr>
-                </thead>
-            </table>
+    <body onload="juegoApp.init()" style="background-color: black;text-align: center">
+        <div id="juego" style="width: 100%;height: 100%;" >
+            <div style="color:#66ccff ;position: absolute;left: 10%" >
+                <h2 >Equipo 1</h2>
+                <table id="ieq1">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left">VIDAS</th>
+                            <td><img Id="1vidas" src="/img/info/vida3.png"></td>
+                        </tr>
+                        <tr >
+                            <th style="text-align: left">PUNTOS</th>
+                            <td Id="1puntos" >0</td>
+                        </tr>
+                        <tr >
+                            <th style="text-align: left">VENTANAS REPARADAS</th>
+                            <td Id="1vn" >0</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div  style="color:#66ccff;position: absolute;right:10%">
+                <h2>Equipo 2</h2>
+                <table id="ieq2">
+                    <thead>
+                        <tr >
+                            <th style="text-align: left">VIDAS</th>
+                            <td><img Id="2vidas" src="/img/info/vida3.png"></td>
+                        </tr>
+                        <tr >
+                            <th style="text-align: left">PUNTOS</th>
+                            <td Id="2puntos" >0</td>
+                        </tr>
+                        <tr >
+                            <th style="text-align: left">VENTANAS REPARADAS</th>
+                            <td Id="2vn" >0</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div style="background:url('img/FondoPartida.jpg');position: absolute;left:31%;width: 39%;height: 910px;text-align: center">
+                <canvas height="835px" width="350px" id="ventanas" style="border:1px solid #B40404;position: absolute;left:26%"></canvas>
+                <canvas height="900px" width="350px" id="pjs" style="border:1px solid #B40404;position: absolute;left:26%"></canvas>
+            </div>
         </div>
-        <div id="ieq2" style="position: absolute;right:20%">
-            <h2>Equipo 2</h2>
-            <table>
-                <thead >
-                    <tr >
-                        <th style="text-align: left">VIDAS</th>
-                        <td Id="vidas" >0</td>
-                    </tr>
-                    <tr >
-                        <th style="text-align: left">PUNTOS</th>
-                        <td Id="puntos" >0</td>
-                    </tr>
-                    <tr >
-                        <th style="text-align: left">VENTANAS REPARADAS</th>
-                        <td Id="vn" >0</td>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-        <div style="background:url('img/FondoPartida.jpg');position: absolute;left:31%;width: 39%;height: 910px;text-align: center">
-            <canvas height="835px" width="350px" id="ventanas" style="border:1px solid #B40404;position: absolute;left:26%"></canvas>
-            <canvas height="900px" width="350px" id="pjs" style="border:1px solid #B40404;position: absolute;left:26%"></canvas>
+        <div id="finjuego" style="color:#66ccff;width: 100%;height: 100%; display:none ;text-align: center">
+            <div style="background-color: #66ccff" >
+                <img  src="img/captura.png" style="text-align: center;  width: 20%"/>
+            </div>
+            <img id="p" src="img/GameOver.png"/>
+            <h2>EQUIPO GANADOR</h2>
+            <div style="text-align: center; width: 50%;position: relative;left: 38%">
+                <table style="text-align: center; width: 50% ;height: 25%">
+                    <thead >
+                        <tr >
+                            <th colspan="2" style="text-align: center">
+                                <img id="ganadorimg" src="" />
+                            </th>
+                        </tr>
+                        <tr >
+                            <th style="text-align: left">PUNTOS TOTALES</th>
+                            <td Id="puntos" >0</td>
+                        </tr>
+                        <tr >
+                            <th style="text-align: left">VENTANAS TOTALES REPARADAS</th>
+                            <td Id="vn" >0</td>
+                        </tr>
+
+                </table>
+
+            </div>
+            <foot>
+                <a href="menu.html"><input type="button" id="e1" value="Volver a jugar" /></a>
+                <a href="index.html"><input type="button" id="e1" value="Salir" /></a>
+            </foot>
         </div>
     </body>
 </html>

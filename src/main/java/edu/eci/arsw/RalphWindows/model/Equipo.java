@@ -5,6 +5,7 @@
  */
 package edu.eci.arsw.RalphWindows.model;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -65,6 +66,7 @@ public class Equipo {
     public ConcurrentHashMap<Integer,Felix> getFelixs() {
         return felixs;
     }
+    
     /**
      * 
      * @param js 

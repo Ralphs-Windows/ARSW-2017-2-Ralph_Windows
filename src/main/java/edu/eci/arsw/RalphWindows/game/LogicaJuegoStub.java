@@ -6,9 +6,9 @@
 package edu.eci.arsw.RalphWindows.game;
 
 
-import edu.eci.arsw.RalphWindows.persistence.cache.SalaJuegoCache;
 import edu.eci.arsw.RalphWindows.model.Equipo;
 import edu.eci.arsw.RalphWindows.model.Felix;
+import edu.eci.arsw.RalphWindows.model.SalaJuego;
 import edu.eci.arsw.RalphWindows.model.Ubicacion;
 import edu.eci.arsw.RalphWindows.model.ventana;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistence;
@@ -43,7 +43,7 @@ public class LogicaJuegoStub {
      */
     public ArrayList<Equipo> mover(int id,Felix f) throws RalphWindowsPersistenceException{
         Equipo eq;
-        SalaJuegoCache s=rph.getSalas(id);
+        SalaJuego s=rph.getSalas(id);
         if (!s.getEquipos().containsKey(f.getEq())) {
             eq = new Equipo(f.getEq());
             eq.getFelixs().put(f.getNum(), f);
@@ -73,7 +73,7 @@ public class LogicaJuegoStub {
      */
     public void reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
         Ubicacion u = jg.getUbicacion();
-        SalaJuegoCache s=rph.getSalas(id);
+        SalaJuego s=rph.getSalas(id);
         ventana[][] ventanas = rph.getMapajuego(id).getVentanas();
         for (ventana[] ventan: ventanas) {
             for (int j = 0; j < ventan.length; j++) {
@@ -119,7 +119,7 @@ public class LogicaJuegoStub {
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public ArrayList<Equipo> infoWinner(int id)throws RalphWindowsPersistenceException {
-        SalaJuegoCache s=rph.getSalas(id);
+        SalaJuego s=rph.getSalas(id);
         ArrayList<Equipo> eqps=new ArrayList<>();
         for (String key : s.getEquipos().keySet()) {
             eqps.add(s.getEquipos().get(key));
@@ -135,7 +135,7 @@ public class LogicaJuegoStub {
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public ArrayList information(int id,Felix f) throws RalphWindowsPersistenceException {
-        SalaJuegoCache s=rph.getSalas(id);
+        SalaJuego s=rph.getSalas(id);
         ArrayList<Integer> temp=new ArrayList<>();
         Equipo eq=s.getEquipos().get(f.getEq());
         temp.add(eq.getPuntos());

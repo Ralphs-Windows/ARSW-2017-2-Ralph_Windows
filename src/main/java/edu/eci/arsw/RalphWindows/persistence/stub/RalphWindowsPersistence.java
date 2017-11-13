@@ -7,7 +7,7 @@ package edu.eci.arsw.RalphWindows.persistence.stub;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
-import edu.eci.arsw.RalphWindows.persistence.cache.SalaJuegoCache;
+import edu.eci.arsw.RalphWindows.model.SalaJuego;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -90,5 +90,5 @@ public interface RalphWindowsPersistence {
      * @return  el id de la sala disponible
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
-    public SalaJuegoCache getSalas(int id) throws RalphWindowsPersistenceException;
+    public SalaJuego getSalas(int id) throws RalphWindowsPersistenceException;
 }

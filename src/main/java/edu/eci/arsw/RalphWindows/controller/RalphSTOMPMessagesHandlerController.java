@@ -6,7 +6,7 @@ package edu.eci.arsw.RalphWindows.controller;
  */
 
 import edu.eci.arsw.RalphWindows.model.Felix;
-import edu.eci.arsw.RalphWindows.game.LogicaJuegoCache;
+import edu.eci.arsw.RalphWindows.persistence.cache.LogicaJuegoCache;
 import edu.eci.arsw.RalphWindows.game.LogicaJuegoStub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;

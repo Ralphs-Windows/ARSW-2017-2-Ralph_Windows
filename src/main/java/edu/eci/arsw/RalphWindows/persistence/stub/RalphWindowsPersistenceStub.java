@@ -7,7 +7,7 @@ package edu.eci.arsw.RalphWindows.persistence.stub;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
-import edu.eci.arsw.RalphWindows.persistence.cache.SalaJuegoCache;
+import edu.eci.arsw.RalphWindows.model.SalaJuego;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RalphWindowsPersistenceStub implements RalphWindowsPersistence {
 
-    private final ConcurrentHashMap<Integer, SalaJuegoCache> DatosSalas;
+    private final ConcurrentHashMap<Integer, SalaJuego> DatosSalas;
     private int sala = 0;
 
     public RalphWindowsPersistenceStub() {
         DatosSalas = new ConcurrentHashMap<>();
-        DatosSalas.put(0, new SalaJuegoCache());
+        DatosSalas.put(0, new SalaJuego());
     }
 
     @Override
@@ -66,12 +66,12 @@ public class RalphWindowsPersistenceStub implements RalphWindowsPersistence {
 
     @Override
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException {
-        DatosSalas.put(sala, new SalaJuegoCache());
+        DatosSalas.put(sala, new SalaJuego());
         this.sala = sala;
     }
 
     @Override
-    public SalaJuegoCache getSalas(int id) throws RalphWindowsPersistenceException {
+    public SalaJuego getSalas(int id) throws RalphWindowsPersistenceException {
         return DatosSalas.get(id);
     }
 }

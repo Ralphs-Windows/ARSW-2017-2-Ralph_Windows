@@ -5,9 +5,6 @@
  */
 package edu.eci.arsw.RalphWindows.model;
 
-import edu.eci.arsw.RalphWindows.model.Equipo;
-import edu.eci.arsw.RalphWindows.model.Jugador;
-import edu.eci.arsw.RalphWindows.model.Mapa;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 

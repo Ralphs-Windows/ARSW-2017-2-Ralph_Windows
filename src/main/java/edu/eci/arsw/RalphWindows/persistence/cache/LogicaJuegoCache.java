@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.RalphWindows.game;
+package edu.eci.arsw.RalphWindows.persistence.cache;
 
 
 import edu.eci.arsw.RalphWindows.model.*;
-import edu.eci.arsw.RalphWindows.persistence.cache.RalphWindowsPersistenceCache;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;

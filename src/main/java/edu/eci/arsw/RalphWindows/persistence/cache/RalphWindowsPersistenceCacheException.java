@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.RalphWindows.persistence;
+package edu.eci.arsw.RalphWindows.persistence.cache;
+
 
 /**
  *
  * @author laura
  */
-public class RalphWindowsPersistenceException extends Exception{
-    public RalphWindowsPersistenceException(String message) {
+public class RalphWindowsPersistenceCacheException extends Exception{
+    public RalphWindowsPersistenceCacheException(String message) {
         super(message);
     }
 
-    public RalphWindowsPersistenceException(String message, Throwable cause) {
+    public RalphWindowsPersistenceCacheException(String message, Throwable cause) {
         super(message, cause);
     }
 }

@@ -7,8 +7,8 @@ package edu.eci.arsw.RalphWindows.services;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
-import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistence;
-import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
+import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistence;
+import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

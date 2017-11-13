@@ -6,7 +6,8 @@ package edu.eci.arsw.RalphWindows.controller;
  */
 
 import edu.eci.arsw.RalphWindows.model.Felix;
-import edu.eci.arsw.RalphWindows.model.LogicaJuego;
+import edu.eci.arsw.RalphWindows.game.LogicaJuegoCache;
+import edu.eci.arsw.RalphWindows.game.LogicaJuegoStub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -24,7 +25,7 @@ public class RalphSTOMPMessagesHandlerController{
     SimpMessagingTemplate msgt;
     
     @Autowired
-    LogicaJuego log=null;
+    LogicaJuegoStub log=null;
     
     /*ConcurrentHashMap<String,LogicaJuego> idrooms=new ConcurrentHashMap<>();*/
     

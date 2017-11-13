@@ -24,22 +24,53 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<dependencies>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-amqp</artifactId>            
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+            </dependency>    
+
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-net</artifactId>
+                <version>2.0.8.RELEASE</version>
+            </dependency>    
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport</artifactId>
+            </dependency>                                
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-native-epoll</artifactId>
+            </dependency>                                
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                </dependency> 
                 <dependency>
-                        <groupId>org.webjars</groupId>
-                        <artifactId>webjars-locator</artifactId>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>webjars-locator</artifactId>
                 </dependency>
                 <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-websocket</artifactId>
-                        <version>4.3.3.RELEASE</version>
-                        <type>jar</type>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-websocket</artifactId>
+                    <version>4.3.3.RELEASE</version>
+                    <type>jar</type>
                 </dependency>
                 <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-messaging</artifactId>
-                        <version>4.3.3.RELEASE</version>
-                        <type>jar</type>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-messaging</artifactId>
+                    <version>4.3.3.RELEASE</version>
+                    <type>jar</type>
                 </dependency>
                 <dependency>
                     <groupId>org.webjars</groupId>
@@ -49,7 +80,7 @@
                 <dependency>
                     <groupId>org.webjars</groupId>
                     <artifactId>jquery</artifactId>
-                    <version>3.1.0</version>
+                        <version>3.1.0</version>
                 </dependency>   
                 <dependency>
 			<groupId>org.springframework.boot</groupId>

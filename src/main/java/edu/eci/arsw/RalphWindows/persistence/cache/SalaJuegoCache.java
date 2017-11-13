@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.RalphWindows.model;
+package edu.eci.arsw.RalphWindows.persistence.cache;
 
 import edu.eci.arsw.RalphWindows.model.Equipo;
 import edu.eci.arsw.RalphWindows.model.Jugador;
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  *
  * @author laura
  */
-public class SalaJuego {
+public class SalaJuegoCache {
     private Integer id;
     private ConcurrentLinkedDeque<Jugador> equipo1;
     private ConcurrentLinkedDeque<Jugador> equipo2;
@@ -28,7 +28,7 @@ public class SalaJuego {
      * @param eq1
      * @param eq2 
      */
-    public SalaJuego(Integer id,ConcurrentLinkedDeque<Jugador> eq1,ConcurrentLinkedDeque<Jugador> eq2) {
+    public SalaJuegoCache(Integer id,ConcurrentLinkedDeque<Jugador> eq1,ConcurrentLinkedDeque<Jugador> eq2) {
         equipo1=eq1;
         equipo2=eq2;
         mapaventanas=new Mapa(Mapa.dibujarMapa());
@@ -37,7 +37,7 @@ public class SalaJuego {
     /**
      * 
      */
-    public SalaJuego(){
+    public SalaJuegoCache(){
         equipo1=new ConcurrentLinkedDeque();
         equipo2=new ConcurrentLinkedDeque(); 
         mapaventanas=new Mapa(Mapa.dibujarMapa());

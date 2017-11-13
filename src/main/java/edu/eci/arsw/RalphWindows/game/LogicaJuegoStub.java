@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.RalphWindows.model;
+package edu.eci.arsw.RalphWindows.game;
 
 
-import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistence;
-import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
+import edu.eci.arsw.RalphWindows.persistence.cache.SalaJuegoCache;
+import edu.eci.arsw.RalphWindows.model.Equipo;
+import edu.eci.arsw.RalphWindows.model.Felix;
+import edu.eci.arsw.RalphWindows.model.Ubicacion;
+import edu.eci.arsw.RalphWindows.model.ventana;
+import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistence;
+import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -19,7 +23,7 @@ import org.springframework.stereotype.Service;
  * @author laura
  */
 @Service
-public class LogicaJuego {
+public class LogicaJuegoStub {
     @Autowired
     RalphWindowsPersistence rph=null;
     @Autowired
@@ -28,18 +32,18 @@ public class LogicaJuego {
     /**
      * 
      */
-    public LogicaJuego() {
+    public LogicaJuegoStub() {
     }
     /**
      * 
      * @param id
      * @param f
      * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public ArrayList<Equipo> mover(int id,Felix f) throws RalphWindowsPersistenceException{
         Equipo eq;
-        SalaJuego s=rph.getSalas(id);
+        SalaJuegoCache s=rph.getSalas(id);
         if (!s.getEquipos().containsKey(f.getEq())) {
             eq = new Equipo(f.getEq());
             eq.getFelixs().put(f.getNum(), f);
@@ -65,11 +69,11 @@ public class LogicaJuego {
      * 
      * @param id
      * @param jg
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public void reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
         Ubicacion u = jg.getUbicacion();
-        SalaJuego s=rph.getSalas(id);
+        SalaJuegoCache s=rph.getSalas(id);
         ventana[][] ventanas = rph.getMapajuego(id).getVentanas();
         for (ventana[] ventan: ventanas) {
             for (int j = 0; j < ventan.length; j++) {
@@ -91,7 +95,7 @@ public class LogicaJuego {
      * 
      * @param id
      * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public boolean terminar(int id)throws RalphWindowsPersistenceException {
         int cont = 0;
@@ -112,10 +116,10 @@ public class LogicaJuego {
      * 
      * @param id
      * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public ArrayList<Equipo> infoWinner(int id)throws RalphWindowsPersistenceException {
-        SalaJuego s=rph.getSalas(id);
+        SalaJuegoCache s=rph.getSalas(id);
         ArrayList<Equipo> eqps=new ArrayList<>();
         for (String key : s.getEquipos().keySet()) {
             eqps.add(s.getEquipos().get(key));
@@ -128,10 +132,10 @@ public class LogicaJuego {
      * @param id
      * @param f
      * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException 
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
     public ArrayList information(int id,Felix f) throws RalphWindowsPersistenceException {
-        SalaJuego s=rph.getSalas(id);
+        SalaJuegoCache s=rph.getSalas(id);
         ArrayList<Integer> temp=new ArrayList<>();
         Equipo eq=s.getEquipos().get(f.getEq());
         temp.add(eq.getPuntos());

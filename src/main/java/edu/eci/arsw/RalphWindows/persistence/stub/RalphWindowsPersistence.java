@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.RalphWindows.persistence;
+package edu.eci.arsw.RalphWindows.persistence.stub;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
-import edu.eci.arsw.RalphWindows.model.SalaJuego;
+import edu.eci.arsw.RalphWindows.persistence.cache.SalaJuegoCache;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -22,7 +22,7 @@ public interface RalphWindowsPersistence {
      * @param idsala el mapa correspondiente a esa sala ya que las ventanas son creadas aleatoriamente
      * @return retorna un mapa de las ventanas
      * @throws
-     * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      *
      */
     public Mapa getMapajuego(int idsala) throws RalphWindowsPersistenceException;
@@ -33,7 +33,7 @@ public interface RalphWindowsPersistence {
      * @param juegonum
      * @param mp
      * @throws
-     * edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public void setMapajuego(int juegonum, Mapa mp) throws RalphWindowsPersistenceException;
     /**
@@ -41,7 +41,7 @@ public interface RalphWindowsPersistence {
      *
      * @param juegonum la id de la sala correspondiente
      * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public ConcurrentLinkedDeque getEquipoFelix1(int juegonum) throws RalphWindowsPersistenceException;
     /**
@@ -49,7 +49,7 @@ public interface RalphWindowsPersistence {
      *
      * @param juegonum la id de la sala correspondiente
      * @return 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public ConcurrentLinkedDeque getEquipoFelix2(int juegonum) throws RalphWindowsPersistenceException;
     /**
@@ -57,7 +57,7 @@ public interface RalphWindowsPersistence {
      *
      * @param juegonum la id de la sala correspondiente
      * @param p El nuevo jugador a registrar
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public void registrarJugadorEquipoFelix1(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
     /**
@@ -65,21 +65,21 @@ public interface RalphWindowsPersistence {
      *
      * @param juegonum la id de la sala correspondiente
      * @param p El nuevo jugador a registrar
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public void registrarJugadorEquipoFelix2(int juegonum, Jugador p) throws RalphWindowsPersistenceException;
     /**
      * Retorna la sala de juego disponible actual para registrar jugadores
      *
      * @return  el id de la sala disponible
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public int getSalaDisponible() throws RalphWindowsPersistenceException;
     /**
      * Cambia la sala disponible actual
      *
      * @param sala 
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException;
 
@@ -88,7 +88,7 @@ public interface RalphWindowsPersistence {
      *
      * @param id
      * @return  el id de la sala disponible
-     * @throws edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException
+     * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException
      */
-    public SalaJuego getSalas(int id) throws RalphWindowsPersistenceException;
+    public SalaJuegoCache getSalas(int id) throws RalphWindowsPersistenceException;
 }

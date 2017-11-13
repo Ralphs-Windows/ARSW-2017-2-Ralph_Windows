@@ -158,7 +158,6 @@ juegoApp = (function () {
                         dir = "L";
                         pos();
                     }
-
                 }
                 /*up*/
                 else if (keypress === 38) {
@@ -167,12 +166,12 @@ juegoApp = (function () {
                         posy -= h;
                         mirada = 3;
                         pos(); 
-                    }                   
+                    }  
                 }
                 /*der*/
                 else if (keypress === 39) {
                     var canvas = document.getElementById("pjs");
-                    if (posx < canvas.width) {
+                    if (posx+w < canvas.width) {
                         
                         posx += 8;
                         mirada += 1;
@@ -183,12 +182,11 @@ juegoApp = (function () {
                 /*down*/
                 else if (keypress === 40) {
                     var canvas = document.getElementById("pjs");
-                    if (posy < canvas.height){
+                    if (posy+h < canvas.height){
                         posy += h;
                         mirada = 3;
                         pos();
                     }
-                    
                 }
             });
             api.getMapa(idsala, function (mapa) {

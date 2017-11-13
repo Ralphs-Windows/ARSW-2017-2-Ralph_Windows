@@ -8,7 +8,7 @@ package edu.eci.arsw.RalphWindows.controller;
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
 import edu.eci.arsw.RalphWindows.model.ventana;
-import edu.eci.arsw.RalphWindows.persistence.RalphWindowsPersistenceException;
+import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsException;
 import edu.eci.arsw.RalphWindows.services.RalphWindowsService;
 import java.util.ArrayList;

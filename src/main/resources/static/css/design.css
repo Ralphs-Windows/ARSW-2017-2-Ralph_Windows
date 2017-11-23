@@ -14,21 +14,21 @@ and open the template in the editor.
     top: 0px;
     text-align: center;
     position:relative;
-    
+
 }
 footer {
-  position:relative;
-  right: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #66ccff;
-  color: #000000;
-  text-align: center;
-  height: 3cm; 
-  width: 100%;
-  left: -5px;
-  bottom: -5px;
-  font: 14px cursive, sans-serif !important;
+    position:relative;
+    right: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #66ccff;
+    color: #000000;
+    text-align: center;
+    height: 3cm; 
+    width: 100%;
+    left: -5px;
+    bottom: -5px;
+    font: 14px cursive, sans-serif !important;
 }
 /*fondo titulo pagina-raya*/
 
@@ -38,7 +38,7 @@ body {
 #imagenFondo{
     height:80% ;
     width:45%;
-    
+
 }
 #movim{
     text-align: center;
@@ -80,92 +80,153 @@ li a:hover:not(.active) {
 /*recuadro de ingresar*/
 
 * {
-  box-sizing: border-box;
-  margin: 5px;
-  padding: 0;
-  font-weight: 300;
+    box-sizing: border-box;
+    margin: 5px;
+    padding: 0;
+    font-weight: 300;
 }
 
 body ::-webkit-input-placeholder {
-  /* WebKit browsers */
-  font-family: cursive;
-  color: white;
-  font-weight: 300;
+    /* WebKit browsers */
+    font-family: cursive;
+    color: white;
+    font-weight: 300;
 }
 
 .wrapper {
-  background: -webkit-linear-gradient(top left, #e6f7ff 0%,  #1ab2ff 100%);
-  background: linear-gradient(to bottom right, #e6f7ff 0%,  #1ab2ff 100%);
-  position: absolute;
-  top: 50%;
-  left: 8%;
-  width: 38%;
-  height: 400px;
-  margin-top: -200px;
-  overflow: hidden;
-  text-align-last: center;
-  font: bold 14px cursive, sans-serif;
+    background: -webkit-linear-gradient(top left, #e6f7ff 0%,  #1ab2ff 100%);
+    background: linear-gradient(to bottom right, #e6f7ff 0%,  #1ab2ff 100%);
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    width: 38%;
+    height: 400px;
+    margin-top: -200px;
+    overflow: hidden;
+    text-align-last: center;
+    font: bold 14px cursive, sans-serif;
 }
 
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 80px 0;
-  height: 400px;
-  text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 0;
+    height: 400px;
+    text-align: center;
 }
 /*barra de menu*/
 .navbar-default{
     background: #66ccff;
-    
+
 }
 form input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  outline: 0;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background-color: rgba(255, 255, 255, 0.2);
-  width: 250px;
-  border-radius: 3px;
-  padding: 10px 15px;
-  margin: 0 auto 10px auto;
-  display: block;
-  text-align: center;
-  font-size: 18px;
-  color: white;
-  -webkit-transition-duration: 0.25s;
-          transition-duration: 0.25s;
-  font-weight: 300;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 250px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 0 auto 10px auto;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 300;
 }
 form input:hover {
-  background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.4);
 }
 form input:focus {
-  background-color: white;
-  width: 300px;
-  color: #53e3a6;
+    background-color: white;
+    width: 300px;
+    color: #53e3a6;
 }
 #login-button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  outline: 0;
-  background-color: white;
-  border: 0;
-  padding: 10px 15px;
-  color: black;
-  border-radius: 3px;
-  width: 250px;
-  cursor: pointer;
-  font-size: 18px;
-  
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background-color: white;
+    border: 0;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 3px;
+    width: 250px;
+    cursor: pointer;
+    font-size: 18px;
+
 }
 form button:hover {
-  background-color: #f5f7f9;
+    background-color: #f5f7f9;
 }
 
 
 .form {
 
 }
+
+
+table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.blueTable tbody td {
+  font-size: 20px;
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 25px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #D0E4F5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  border-top: 2px solid #444444;
+}
+table.blueTable tfoot td {
+  font-size: 14px;
+}
+table.blueTable tfoot .links {
+  text-align: right;
+}
+table.blueTable tfoot .links a{
+  display: inline-block;
+  background: #1C6EA4;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+}
+

@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.BUILD-SNAPSHOT</version>
+		<version>1.4.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -37,20 +37,30 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-net</artifactId>
-                <version>2.0.8.RELEASE</version>
             </dependency>    
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-transport</artifactId>
-            </dependency>                                
+            </dependency>     
+                                   
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-transport-native-epoll</artifactId>
+                <version>4.0.42.Final</version>
             </dependency>                                
-
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport</artifactId>
+                <version>4.0.42.Final</version>
+            </dependency>   
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-handler</artifactId>
+                <version>4.0.42.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -63,7 +73,6 @@
                 <dependency>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-websocket</artifactId>
-                    <version>4.3.3.RELEASE</version>
                     <type>jar</type>
                 </dependency>
                 <dependency>

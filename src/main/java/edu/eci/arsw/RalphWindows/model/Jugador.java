@@ -5,12 +5,26 @@
  */
 package edu.eci.arsw.RalphWindows.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  *
  * @author laura
  */
+@Document(collection = "jugadores")
 public class Jugador {
-    String username;
+    @Id
+    private String username;
+    private int score;
+    /**
+     * 
+     * @param nombre 
+     */
+    public Jugador(String nombre,int score){
+        this.username=nombre;
+        this.score=score;
+    }
     /**
      * 
      * @param nombre 
@@ -37,6 +51,14 @@ public class Jugador {
      */
     public void setUsername (String nombre){
         username=nombre;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
     
 }

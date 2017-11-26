@@ -52,6 +52,18 @@ public class RalphWindowsRESTController {
         }}
     }
     
+    @RequestMapping(path = "/puntaje", method = RequestMethod.GET)
+    public ResponseEntity<?> getPuntaje() {
+        synchronized (RalphServices) {
+        try {
+            return new ResponseEntity<>(RalphServices.getPuntajesJugadores(),HttpStatus.ACCEPTED);
+        } catch (RalphWindowsPersistenceException ex) {
+            Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error al devolver puntajes", HttpStatus.BAD_REQUEST);
+        }
+        }
+    }
+    
     @RequestMapping(path = "/{juegonum}/updatemapajuego", method = RequestMethod.PUT)
     public ResponseEntity<?> updateMapa(@PathVariable String juegonum,@RequestBody Mapa mp) {
         try {

@@ -7,8 +7,10 @@ package edu.eci.arsw.RalphWindows.services;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
+import edu.eci.arsw.RalphWindows.persistence.cache.JugadoresMongoDB;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,10 @@ public class RalphWindowsService {
 
     @Autowired
     RalphWindowsPersistence ralphpersistence = null;
+    
+    //repositorios (capa de persistencia)
+    @Autowired
+    JugadoresMongoDB jugadores;
 
     public Mapa getMapajuego(int juegonum) throws RalphWindowsPersistenceException {
         return ralphpersistence.getMapajuego(juegonum);
@@ -52,6 +58,10 @@ public class RalphWindowsService {
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException {
         ralphpersistence.setSalaDisponible(sala);
 
+    }
+    
+    public List<Jugador> getPuntajesJugadores() throws RalphWindowsPersistenceException {
+        return jugadores.findByScore(1000);
     }
 
 }

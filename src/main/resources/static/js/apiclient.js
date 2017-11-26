@@ -19,6 +19,19 @@ apiclient= (function() {
             );
             return getpromise;
         },
+        getPuntajes: function (callback){
+           var getpromise = $.get("/juego/puntaje",callback);
+            getpromise.then(
+                    function () {
+                        console.info("OK getPuntaje");
+                        
+                    },
+                    function () {
+                        alert("Error getPuntaje");
+                    }
+            );
+            return getpromise;
+        },
         setMapa: function (idsala, mapav) {
             var putpromise = $.ajax({
                 url: "/juego/" + idsala + "/updatemapajuego",
@@ -112,6 +125,7 @@ apiclient= (function() {
             );
             return putpromise;
         }
+        
         
     };
 })();

@@ -52,6 +52,7 @@ juegoApp = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS("/stompendpoint");
         stompClient = Stomp.over(socket);
+        /*
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe("/topic/juego/mover." + idsala, function (data) {
@@ -101,7 +102,64 @@ juegoApp = (function () {
 
             });
             felixinitial();
-        });
+        });*/
+        stompClient.connect("nhtirukb", "qMV53drlheesyQPG9rjGg5aQ4pgMDsvt",
+                function (frame) {
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe("/topic/juego/mover." + idsala, function (data) {
+                        var felixs = JSON.parse(data.body);
+                        var canvas = document.getElementById("pjs");
+                        canvas.width = canvas.width;
+                        canvas.height = canvas.height;
+                        felixs.map(function (f) {
+                            new felix(f.ubicacion.xpos, f.ubicacion.ypos, w, h, "img/personajes/felix" + f.eq + f.dir + ".png");
+                        });
+
+                    });
+                    stompClient.subscribe("/topic/juego/reparar." + idsala, function (data) {
+                        var ventanas = JSON.parse(data.body);
+                        var canvas = document.getElementById("ventanas");
+                        canvas.width = canvas.width;
+                        canvas.height = canvas.height;
+                        map(ventanas);
+                    });
+                    stompClient.subscribe("/topic/juego/informacion." + idsala + "/eq." + eq, function (data) {
+                        var info = JSON.parse(data.body);
+                        $("#" + eq + "puntos").text(info[0]);
+                        $("#" + eq + "vn").text(info[2]);
+                        $("#" + eq + "vidas").src = "/img/vida" + info[1] + ".png";
+
+                    });
+                    stompClient.subscribe("/topic/juego/estadojuego." + idsala, function (data) {
+                        var terminado = JSON.parse(data.body);
+                        var div1 = document.getElementById('juego');
+                        var div2 = document.getElementById('finjuego');
+                        div1.style.display = "none";
+                        div2.style.display = "block";
+                        var equipoganador;
+                        terminado.map(function (eqs) {
+                            for (var i = 0; i < terminado.length; i++) {
+                                if (eqs.puntos > terminado[i].puntos) {
+                                    equipoganador = eqs;
+                                } else if (eqs.puntos < terminado[i].puntos) {
+                                    equipoganador = terminado[i];
+                                }
+                            }
+                        });
+                        var equipo = equipoganador.ideq;
+                        document.getElementById('ganadorimg').src = "img/personajes/felix" + equipo.toString() + "R0.png";
+                        $("#puntos").text(equipoganador.puntos);
+                        $("#vn").text(equipoganador.puntos / 10);
+
+                    });
+                    felixinitial();
+                }
+        ,
+                function (error) {
+                    console.info("error" + error);
+                }
+
+        , "nhtirukb");
 
     };
 

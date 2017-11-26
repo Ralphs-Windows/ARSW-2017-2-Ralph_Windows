@@ -22,6 +22,29 @@ salasApp = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS("/stompendpoint");
         stompClient = Stomp.over(socket);
+        stompClient.connect("nhtirukb", "qMV53drlheesyQPG9rjGg5aQ4pgMDsvt",
+                function (frame) {
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe("/topic/equipo1." + idsala, function (data) {
+                        equipo(JSON.parse(data.body), 1);
+                    });
+                    stompClient.subscribe("/topic/equipo2." + idsala, function (data) {
+                        equipo(JSON.parse(data.body), 2);
+                    });
+                    stompClient.subscribe("/topic/juego/" + idsala, function (data) {
+                        var numj = JSON.parse(data.body);
+                        if (numj) {
+                            window.location.href = "SalaJuego.html";
+                        }
+                    });
+                }
+        ,
+                function (error) {
+                    console.info("error" + error);
+                }
+
+        , "nhtirukb");
+        /*
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe("/topic/equipo1."+idsala, function (data) {
@@ -37,7 +60,7 @@ salasApp = (function () {
                 }
             });
             
-        });
+        });*/
         
         
     };
@@ -79,6 +102,16 @@ salasApp = (function () {
                 stompClient.disconnect();
                 console.log("Disconnected");
             }
+        },
+        getPuntajes: function(){
+            api.getPuntajes(function (jugadores){
+                alert("entra");
+                $("#blueTable tbody tr").remove();
+                var pt = jugadores.map(function (jugador) {
+                return "<tr><td>" + jugador.username + "</td><td>" + jugador.score + "</td></tr>";
+                });
+                $("#blueTable tbody").append(pt);
+            });
         }
     };
 })();

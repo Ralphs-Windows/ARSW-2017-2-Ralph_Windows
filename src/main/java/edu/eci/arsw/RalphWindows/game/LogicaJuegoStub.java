@@ -85,7 +85,7 @@ public class LogicaJuegoStub {
                         int p=e.getFelixs().get(jg.getNum()).getPuntos();
                         e.getFelixs().get(jg.getNum()).setPuntos(p+10);
                         e.setPuntos(e.getPuntos() + 10);
-                        msgt.convertAndSend("/topic/juego/reparar." + id, ventanas);
+                        msgt.convertAndSend("/topic/juego-reparar." + id, ventanas);
                     }
                 }
             }

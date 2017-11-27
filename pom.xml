@@ -38,10 +38,6 @@
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-net</artifactId>
             </dependency>    
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-transport</artifactId>
-            </dependency>     
                                    
             <dependency>
                 <groupId>io.netty</groupId>

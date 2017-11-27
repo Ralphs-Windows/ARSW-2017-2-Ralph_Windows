@@ -63,6 +63,17 @@ public class RalphWindowsRESTController {
         }
         }
     }
+    @RequestMapping(path = "/perfiluser/{nombre}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPerfil(@PathVariable String nombre) {
+        synchronized (RalphServices) {
+        try {
+            return new ResponseEntity<>(RalphServices.getPerfil(nombre),HttpStatus.ACCEPTED);
+        } catch (RalphWindowsPersistenceException ex) {
+            Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error al devolver puntajes", HttpStatus.BAD_REQUEST);
+        }
+        }
+    }
     
     @RequestMapping(path = "/{juegonum}/updatemapajuego", method = RequestMethod.PUT)
     public ResponseEntity<?> updateMapa(@PathVariable String juegonum,@RequestBody Mapa mp) {
@@ -90,7 +101,7 @@ public class RalphWindowsRESTController {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
                     msgt.convertAndSend("/topic/equipo1."+juegonum, equipo1);
-                    msgt.convertAndSend("/topic/juego/"+juegonum,equipo1.size()+equipo2.size()==2);
+                    msgt.convertAndSend("/topic/juego."+juegonum,equipo1.size()+equipo2.size()==2);
                 } else {
                     throw new RalphWindowsException("No se puede elegir el equipo 1 porque está lleno");
                 }
@@ -117,7 +128,7 @@ public class RalphWindowsRESTController {
                         RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
                     }
                     msgt.convertAndSend("/topic/equipo2."+juegonum, equipo2);
-                    msgt.convertAndSend("/topic/juego/"+juegonum, equipo1.size()+equipo2.size()==2);
+                    msgt.convertAndSend("/topic/juego."+juegonum, equipo1.size()+equipo2.size()==2);
                 } else {
                     throw new RalphWindowsException("No se puede elegir el equipo 2 porque está lleno");
                 }

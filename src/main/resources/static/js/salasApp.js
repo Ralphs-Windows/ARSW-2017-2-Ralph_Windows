@@ -31,7 +31,7 @@ salasApp = (function () {
                     stompClient.subscribe("/topic/equipo2." + idsala, function (data) {
                         equipo(JSON.parse(data.body), 2);
                     });
-                    stompClient.subscribe("/topic/juego/" + idsala, function (data) {
+                    stompClient.subscribe("/topic/juego." + idsala, function (data) {
                         var numj = JSON.parse(data.body);
                         if (numj) {
                             window.location.href = "SalaJuego.html";
@@ -102,16 +102,6 @@ salasApp = (function () {
                 stompClient.disconnect();
                 console.log("Disconnected");
             }
-        },
-        getPuntajes: function(){
-            api.getPuntajes(function (jugadores){
-                alert("entra");
-                $("#blueTable tbody tr").remove();
-                var pt = jugadores.map(function (jugador) {
-                return "<tr><td>" + jugador.username + "</td><td>" + jugador.score + "</td></tr>";
-                });
-                $("#blueTable tbody").append(pt);
-            });
         }
     };
 })();

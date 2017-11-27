@@ -8,9 +8,8 @@
 var api=apiclient;
 rankingApp = (function () {
     return {
-        getPuntajes: function(){
+        puntajes: function(){
             api.getPuntajes(function (jugadores){
-                alert("entra");
                 $("#rank tbody tr").remove();
                 var pt = jugadores.map(function (jugador) {
                 return "<tr><td>" + jugador.username + "</td><td>" + jugador.score + "</td></tr>";
@@ -20,3 +19,6 @@ rankingApp = (function () {
         }
     };
 })();
+$(document).ready(function (){
+    rankingApp.puntajes();
+});

@@ -63,5 +63,8 @@ public class RalphWindowsService {
     public List<Jugador> getPuntajesJugadores() throws RalphWindowsPersistenceException {
         return jugadores.findByScore(1000);
     }
+    public Jugador getPerfil(String nombre) throws RalphWindowsPersistenceException {
+        return jugadores.findByUsername(nombre);
+    }
 
 }

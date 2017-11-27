@@ -106,7 +106,8 @@ juegoApp = (function () {
         stompClient.connect("nhtirukb", "qMV53drlheesyQPG9rjGg5aQ4pgMDsvt",
                 function (frame) {
                     console.log('Connected: ' + frame);
-                    stompClient.subscribe("/topic/juego/mover." + idsala, function (data) {
+                    stompClient.subscribe("/topic/juego-mover." + idsala, function (data) {
+                        alert("etrt");
                         var felixs = JSON.parse(data.body);
                         var canvas = document.getElementById("pjs");
                         canvas.width = canvas.width;
@@ -116,21 +117,21 @@ juegoApp = (function () {
                         });
 
                     });
-                    stompClient.subscribe("/topic/juego/reparar." + idsala, function (data) {
+                    stompClient.subscribe("/topic/juego-reparar." + idsala, function (data) {
                         var ventanas = JSON.parse(data.body);
                         var canvas = document.getElementById("ventanas");
                         canvas.width = canvas.width;
                         canvas.height = canvas.height;
                         map(ventanas);
                     });
-                    stompClient.subscribe("/topic/juego/informacion." + idsala + "/eq." + eq, function (data) {
+                    stompClient.subscribe("/topic/juego-informacion." + idsala + "eq." + eq, function (data) {
                         var info = JSON.parse(data.body);
                         $("#" + eq + "puntos").text(info[0]);
                         $("#" + eq + "vn").text(info[2]);
                         $("#" + eq + "vidas").src = "/img/vida" + info[1] + ".png";
 
                     });
-                    stompClient.subscribe("/topic/juego/estadojuego." + idsala, function (data) {
+                    stompClient.subscribe("/topic/juego-estadojuego." + idsala, function (data) {
                         var terminado = JSON.parse(data.body);
                         var div1 = document.getElementById('juego');
                         var div2 = document.getElementById('finjuego');
@@ -189,10 +190,10 @@ juegoApp = (function () {
         if (mirada > 3) {
             mirada = 0;
         }
-        stompClient.send("/app/juego/mover." + idsala, {}, JSON.stringify({"ubicacion": {"xpos": posx, "ypos": posy, "ancho": w, "alto": h}, "eq": eq, "dir": dir + mirada, "num": num, "nombre": username}));
+        stompClient.send("/app/mover." + idsala, {}, JSON.stringify({"ubicacion": {"xpos": posx, "ypos": posy, "ancho": w, "alto": h}, "eq": eq, "dir": dir + mirada, "num": num, "nombre": username}));
     };
     var repare = function () {
-        stompClient.send("/app/juego/reparar." + idsala, {}, JSON.stringify({"ubicacion": {"xpos": posx, "ypos": posy, "ancho": w, "alto": h}, "eq": eq, "dir": dir + mirada, "num": num}));
+        stompClient.send("/app/reparar." + idsala, {}, JSON.stringify({"ubicacion": {"xpos": posx, "ypos": posy, "ancho": w, "alto": h}, "eq": eq, "dir": dir + mirada, "num": num}));
     };
     return{
         init: function () {

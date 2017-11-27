@@ -32,6 +32,19 @@ apiclient= (function() {
             );
             return getpromise;
         },
+        getPerfil: function (nombre,callback){
+           var getpromise = $.get("/juego/perfiluser/"+nombre,callback);
+            getpromise.then(
+                    function () {
+                        console.info("OK getPuntaje");
+                        
+                    },
+                    function () {
+                        alert("Error getPuntaje");
+                    }
+            );
+            return getpromise;
+        },
         setMapa: function (idsala, mapav) {
             var putpromise = $.ajax({
                 url: "/juego/" + idsala + "/updatemapajuego",

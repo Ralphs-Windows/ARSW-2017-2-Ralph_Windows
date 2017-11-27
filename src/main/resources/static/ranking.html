@@ -8,15 +8,19 @@ and open the template in the editor.
     <head>
         <title>Ralph Windows/Ranking</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
         <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/design.css" />
-        <link rel="stylesheet" href="css/design.css" type="text/css">       
+        <link rel="stylesheet" href="css/design.css" type="text/css">  
+        <script src="js/apiclient.js"></script>
+        <script src="js/rankingApp.js"></script>
     </head>
     <!--style="background-color:#000000;"-->
-    <body onload="rankingApp.getPuntajes()">
+    <body>
         <img  src="img/captura.png" style="text-align: center;  width: 20%" />
         <nav class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
@@ -37,8 +41,8 @@ and open the template in the editor.
         <br>
         <div id="subtitulo" onload="">
             <h2>RANKING DE JUGADORES</h2>        
-            <br>         
-            <table id="rank" class="blueTable" onload="rankingApp.getPuntajes()">
+            <br>     
+            <table id="rank" class="blueTable">
                 <thead>
                     <tr>
                         <th>NOMBRE</th>

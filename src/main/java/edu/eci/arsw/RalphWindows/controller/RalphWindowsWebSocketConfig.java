@@ -40,8 +40,8 @@ public class RalphWindowsWebSocketConfig extends AbstractWebSocketMessageBrokerC
                 setSystemLogin(user).
                 setSystemPasscode(password).
                 setVirtualHost(user);
-        config.setApplicationDestinationPrefixes("/app/"); 
-        config.setPathMatcher(new AntPathMatcher("."));
+        config.setApplicationDestinationPrefixes("/app"); 
+        config.setPathMatcher(new AntPathMatcher("/"));
         
     }
 
@@ -49,6 +49,7 @@ public class RalphWindowsWebSocketConfig extends AbstractWebSocketMessageBrokerC
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         /*registry.addEndpoint("/stompendpoint").withSockJS();*/
         registry.addEndpoint("/stompendpoint").setAllowedOrigins("*").withSockJS();
+        
 	
         
     }

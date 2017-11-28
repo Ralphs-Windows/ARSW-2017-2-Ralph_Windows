@@ -31,6 +31,7 @@ public class Jugador {
      */
     public Jugador(String nombre){
         this.username=nombre;
+        score=0;
     }
     /**
      * 

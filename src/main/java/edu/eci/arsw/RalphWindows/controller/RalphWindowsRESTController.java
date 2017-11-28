@@ -5,6 +5,8 @@
  */
 package edu.eci.arsw.RalphWindows.controller;
 
+import edu.eci.arsw.RalphWindows.game.LogicaJuegoStub;
+import edu.eci.arsw.RalphWindows.model.Felix;
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
 import edu.eci.arsw.RalphWindows.model.ventana;
@@ -20,6 +22,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +44,9 @@ public class RalphWindowsRESTController {
 
     @Autowired
     SimpMessagingTemplate msgt;
+    
+    @Autowired
+    LogicaJuegoStub log=null;
     
     @RequestMapping(path = "/{juegonum}/mapajuego", method = RequestMethod.GET)
     public ResponseEntity<?> getMapa(@PathVariable String juegonum) {
@@ -63,11 +70,42 @@ public class RalphWindowsRESTController {
         }
         }
     }
+    @RequestMapping(path = "/newjugador", method = RequestMethod.POST)
+    public ResponseEntity<?> newJugador(@RequestBody Jugador j) {
+        synchronized (RalphServices) {
+            try {
+                if (RalphServices.getPerfil(j.getUsername()) == null) {
+                    RalphServices.newUser(j);
+                    return new ResponseEntity<>(HttpStatus.ACCEPTED);
+                }else{
+                     return new ResponseEntity<>("Error al crear usuario",HttpStatus.BAD_REQUEST);
+                }
+            } catch (RalphWindowsPersistenceException ex) {
+                Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
+                return new ResponseEntity<>("Error al crear usuario",HttpStatus.BAD_REQUEST);
+            }
+            
+        }
+    }
     @RequestMapping(path = "/perfiluser/{nombre}", method = RequestMethod.GET)
     public ResponseEntity<?> getPerfil(@PathVariable String nombre) {
         synchronized (RalphServices) {
         try {
             return new ResponseEntity<>(RalphServices.getPerfil(nombre),HttpStatus.ACCEPTED);
+        } catch (RalphWindowsPersistenceException ex) {
+            Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error al devolver puntajes", HttpStatus.BAD_REQUEST);
+        }
+        }
+    }
+    @RequestMapping(path = "/user/{nombre}", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser(@PathVariable String nombre) {
+        synchronized (RalphServices) {
+        try {
+            if(RalphServices.getPerfil(nombre)==null){
+                return new ResponseEntity<>("Error al devolver puntajes", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (RalphWindowsPersistenceException ex) {
             Logger.getLogger(RalphWindowsRESTController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error al devolver puntajes", HttpStatus.BAD_REQUEST);
@@ -179,5 +217,5 @@ public class RalphWindowsRESTController {
             return new ResponseEntity<>("Hay un error al llamar al metodo get de sala disponible", HttpStatus.BAD_REQUEST);
         }
     }
-
+    
 }

@@ -13,6 +13,9 @@ import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceExcepti
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.session.SessionProperties;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,6 +31,9 @@ public class RalphWindowsService {
     //repositorios (capa de persistencia)
     @Autowired
     JugadoresMongoDB jugadores;
+    
+    @Autowired
+    MongoTemplate mt;
 
     public Mapa getMapajuego(int juegonum) throws RalphWindowsPersistenceException {
         return ralphpersistence.getMapajuego(juegonum);
@@ -59,7 +65,9 @@ public class RalphWindowsService {
         ralphpersistence.setSalaDisponible(sala);
 
     }
-    
+    public void newUser(Jugador j) throws RalphWindowsPersistenceException{
+        mt.insert(j,"jugadores");
+    }
     public List<Jugador> getPuntajesJugadores() throws RalphWindowsPersistenceException {
         return jugadores.findByScore(1000);
     }

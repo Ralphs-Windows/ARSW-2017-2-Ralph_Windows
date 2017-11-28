@@ -21,4 +21,5 @@ public interface JugadoresMongoDB extends MongoRepository <Jugador,String>{
     //@Query("{ 'firstname' : ?0 }")
     @Query("{\"score\": {\"$gte\": ?0}}")
     List<Jugador> findByScore(int score);
+    
 }

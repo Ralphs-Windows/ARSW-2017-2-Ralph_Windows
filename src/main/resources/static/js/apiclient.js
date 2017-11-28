@@ -40,7 +40,20 @@ apiclient= (function() {
                         
                     },
                     function () {
-                        alert("Error getPuntaje");
+                        alert("Error usuario ya registrado");
+                    }
+            );
+            return getpromise;
+        },
+        getUser: function (nombre,callback){
+           var getpromise = $.get("/juego/user/"+nombre,callback);
+            getpromise.then(
+                    function () {
+                        console.info("OK getPuntaje");
+                        
+                    },
+                    function () {
+                        alert("Error usuario no registrado");
                     }
             );
             return getpromise;
@@ -61,6 +74,23 @@ apiclient= (function() {
                     }
             );
             return putpromise;
+        },
+        registerUser: function (nombre) {
+            var postpromise =$.ajax({
+                url: "/juego/newjugador",
+                type: 'POST',
+                data: JSON.stringify({'username':nombre,'score':0}),
+                contentType: "application/json"
+            });
+            postpromise.then(
+                    function () {
+                        console.info("OK setMapajuego");
+                    },
+                    function () {
+                        alert("Error: el usuario ya existe");
+                    }
+            );
+            return postpromise;
         },
         getSala: function (callback) {
             var getpromise = $.get("/juego/Sala", callback);

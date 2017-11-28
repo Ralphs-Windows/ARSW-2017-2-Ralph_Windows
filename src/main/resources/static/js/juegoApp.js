@@ -107,7 +107,6 @@ juegoApp = (function () {
                 function (frame) {
                     console.log('Connected: ' + frame);
                     stompClient.subscribe("/topic/juego-mover." + idsala, function (data) {
-                        alert("etrt");
                         var felixs = JSON.parse(data.body);
                         var canvas = document.getElementById("pjs");
                         canvas.width = canvas.width;

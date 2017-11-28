@@ -28,10 +28,9 @@ public class RalphSTOMPMessagesHandlerController{
     @Autowired
     LogicaJuegoStub log=null;
     
-    
     @MessageMapping("/mover.{idsala}")
     public void mover(@DestinationVariable int idsala, Felix f) throws Exception {
-        System.out.println("Mover a felix numero "+f.getNum()+" del equipo "+f.getEq());
+        //System.out.println("Mover a felix numero "+f.getNum()+" del equipo "+f.getEq());
         synchronized (msgt) {
             /*Se envia informacion de todos los jugadores al moverse*/
             msgt.convertAndSend("/topic/juego-mover." + idsala, log.mover(idsala,f));

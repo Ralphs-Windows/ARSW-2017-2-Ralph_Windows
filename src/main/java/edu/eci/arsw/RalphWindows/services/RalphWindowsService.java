@@ -7,6 +7,7 @@ package edu.eci.arsw.RalphWindows.services;
 
 import edu.eci.arsw.RalphWindows.model.Jugador;
 import edu.eci.arsw.RalphWindows.model.Mapa;
+import edu.eci.arsw.RalphWindows.persistence.cache.JuegoCacheRedis;
 import edu.eci.arsw.RalphWindows.persistence.cache.JugadoresMongoDB;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
@@ -26,14 +27,17 @@ import org.springframework.stereotype.Service;
 public class RalphWindowsService {
 
     @Autowired
-    RalphWindowsPersistence ralphpersistence = null;
+    private RalphWindowsPersistence ralphpersistence = null;
+    
+    @Autowired
+    private JuegoCacheRedis juegoredis = null;
     
     //repositorios (capa de persistencia)
     @Autowired
-    JugadoresMongoDB jugadores;
+    private JugadoresMongoDB jugadores;
     
     @Autowired
-    MongoTemplate mt;
+    private MongoTemplate mt;
 
     public Mapa getMapajuego(int juegonum) throws RalphWindowsPersistenceException {
         return ralphpersistence.getMapajuego(juegonum);
@@ -58,13 +62,16 @@ public class RalphWindowsService {
     }
     
     public int getSalaDisponible() throws RalphWindowsPersistenceException {
+        juegoredis.getSalaDisponible();
         return ralphpersistence.getSalaDisponible();
     }
     
     public void setSalaDisponible(int sala) throws RalphWindowsPersistenceException {
+        //juegoredis.createSala();
         ralphpersistence.setSalaDisponible(sala);
 
     }
+    /*MongoDB*/
     public void newUser(Jugador j) throws RalphWindowsPersistenceException{
         mt.insert(j,"jugadores");
     }

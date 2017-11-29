@@ -13,7 +13,7 @@ ingresarApp= (function() {
     return{
         registro: function (){
             username=document.getElementById('usuarioid').value;
-            if(username!=="" && username!==null){
+            if((username!=="" && username!==null)){
                 api.registerUser(username).then(function(u){
                 sessionStorage.setItem('username', document.getElementById('usuarioid').value);
                 window.location.href = "menu.html";

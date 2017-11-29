@@ -8,6 +8,8 @@ package edu.eci.arsw.RalphWindows.controller;
 import edu.eci.arsw.RalphWindows.model.Felix;
 import edu.eci.arsw.RalphWindows.persistence.cache.LogicaJuegoCache;
 import edu.eci.arsw.RalphWindows.game.LogicaJuegoStub;
+import edu.eci.arsw.RalphWindows.model.ventana;
+import edu.eci.arsw.RalphWindows.persistence.cache.JuegoCacheRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -28,6 +30,9 @@ public class RalphSTOMPMessagesHandlerController{
     @Autowired
     LogicaJuegoStub log=null;
     
+    @Autowired
+    JuegoCacheRedis logredis=null;
+    
     @MessageMapping("/mover.{idsala}")
     public void mover(@DestinationVariable int idsala, Felix f) throws Exception {
         //System.out.println("Mover a felix numero "+f.getNum()+" del equipo "+f.getEq());
@@ -42,9 +47,11 @@ public class RalphSTOMPMessagesHandlerController{
         /*System.out.println("Felix numero "+f.getNum()+" repara la ventana");*/
         synchronized (msgt) {
             /*Revisa si la ventana puede ser reparada*/
-            log.reparar(idsala,f);
+            ventana[][] v=log.reparar(idsala,f);
+            if(log.reparar(idsala,f)!=null){
+                msgt.convertAndSend("/topic/juego-reparar." + idsala, v);
+            };
             /*Revisa si se repraron todas la ventanas*/
-            
             if(log.terminar(idsala)){
                 /*Si si se han reparado todas las ventanas, se envia informacion de fin de juego*/
                 msgt.convertAndSend("/topic/juego-estadojuego."+idsala, log.infoWinner(idsala));

@@ -14,6 +14,7 @@ import edu.eci.arsw.RalphWindows.model.ventana;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistence;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -69,9 +70,10 @@ public class LogicaJuegoStub {
      * 
      * @param id
      * @param jg
+     * @return 
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
-    public void reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
+    public ventana[][] reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
         Ubicacion u = jg.getUbicacion();
         SalaJuego s=rph.getSalas(id);
         ventana[][] ventanas = rph.getMapajuego(id).getVentanas();
@@ -85,11 +87,12 @@ public class LogicaJuegoStub {
                         int p=e.getFelixs().get(jg.getNum()).getPuntos();
                         e.getFelixs().get(jg.getNum()).setPuntos(p+10);
                         e.setPuntos(e.getPuntos() + 10);
-                        msgt.convertAndSend("/topic/juego-reparar." + id, ventanas);
+                        return ventanas;
                     }
                 }
             }
-        }   
+        }
+        return null;
     }
     /**
      * 

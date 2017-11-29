@@ -136,7 +136,8 @@ public class RalphWindowsRESTController {
                  
 
                     if (equipo2.size() == 1 && equipo1.size() == 1) {
-                        RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
+                        //RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
+                        RalphServices.setSalaDisponible();
                     }
                     msgt.convertAndSend("/topic/equipo1."+juegonum, equipo1);
                     msgt.convertAndSend("/topic/juego."+juegonum,equipo1.size()+equipo2.size()==2);
@@ -163,7 +164,8 @@ public class RalphWindowsRESTController {
                     
 
                     if (equipo2.size() == 1 && equipo1.size() == 1) {
-                        RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
+                        //RalphServices.setSalaDisponible(RalphServices.getSalaDisponible() + 1);
+                        RalphServices.setSalaDisponible();
                     }
                     msgt.convertAndSend("/topic/equipo2."+juegonum, equipo2);
                     msgt.convertAndSend("/topic/juego."+juegonum, equipo1.size()+equipo2.size()==2);

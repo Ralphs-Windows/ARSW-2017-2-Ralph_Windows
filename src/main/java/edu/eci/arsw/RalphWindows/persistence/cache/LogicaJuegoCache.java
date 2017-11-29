@@ -9,9 +9,8 @@ package edu.eci.arsw.RalphWindows.persistence.cache;
 import edu.eci.arsw.RalphWindows.model.*;
 import edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,69 +19,99 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LogicaJuegoCache {
-    @Autowired
-    RalphWindowsPersistenceCache rph=null;
-    @Autowired
-    SimpMessagingTemplate msgt;
-    @Autowired
-    StringRedisTemplate template;
+    
+    private StringRedisTemplate template;
+    private String id;
     
     /**
      * 
      * @param template
      */
-    public LogicaJuegoCache(StringRedisTemplate template) {
+    public  LogicaJuegoCache()  {
     }
+    
+    public LogicaJuegoCache(int id,StringRedisTemplate template) {
+        this.id="juego:"+id;
+        this.template=template;
+    }
+    
     /**
      * 
-     * @param id
      * @param f
      * @return 
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
-    public ArrayList<Equipo> mover(int id,Felix f) throws RalphWindowsPersistenceException{
+    public ArrayList<Equipo> mover(Felix f) throws RalphWindowsPersistenceException{
        
         return null;
     }
     /**
      * 
-     * @param id
      * @param jg
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
-    public void reparar(int id,Felix jg) throws RalphWindowsPersistenceException {
+    public void reparar(Felix jg) throws RalphWindowsPersistenceException {
          
     }
     /**
      * 
-     * @param id
      * @return 
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
-    public boolean terminar(int id)throws RalphWindowsPersistenceException {
+    public boolean terminar()throws RalphWindowsPersistenceException {
         return true;
     }
     
     /**
      * 
-     * @param id
      * @return 
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
-    public ArrayList<Equipo> infoWinner(int id)throws RalphWindowsPersistenceException {
+    public ArrayList<Equipo> infoWinner()throws RalphWindowsPersistenceException {
         return null;
     }
     
     /**
      * 
-     * @param id
      * @param f
      * @return 
      * @throws edu.eci.arsw.RalphWindows.persistence.stub.RalphWindowsPersistenceException 
      */
-    public ArrayList information(int id,Felix f) throws RalphWindowsPersistenceException {
+    public ArrayList information(Felix f) throws RalphWindowsPersistenceException {
        
         return null;
+    }
+    
+    public Mapa getMapajuego() throws RalphWindowsPersistenceException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setMapajuego( Mapa mp) throws RalphWindowsPersistenceException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List getEquipoFelix1() throws RalphWindowsPersistenceException {
+        List value=(List<String>)template.opsForHash().get(id, "equipoFelix:1");
+        return value;
+    }
+
+    public List getEquipoFelix2() throws RalphWindowsPersistenceException {
+        List value=(List<String>)template.opsForHash().get(id, "equipoFelix:2");
+        return value;
+    }
+
+    public void registrarEquipoFelix1(Jugador p) throws RalphWindowsPersistenceException {
+        List num=(List<String>)template.opsForHash().get(id, "equipoFelix:1");
+        template.opsForHash().put(id+"equipoFelix:1 jugador:"+String.valueOf(num.size()),"nombre",p.getUsername());
+        template.opsForHash().put(id+"equipoFelix:1 jugador:"+String.valueOf(num.size()),"score",p.getScore());
+        
+        
+    }
+
+    public void registrarEquipoFelix2(Jugador p) throws RalphWindowsPersistenceException {
+        List num=(List<String>)template.opsForHash().get(id, "equipoFelix:2");
+        template.opsForHash().put(id+"equipoFelix:2 jugador:"+String.valueOf(num.size()),"nombre",p.getUsername());
+        template.opsForHash().put(id+"equipoFelix:2 jugador:"+String.valueOf(num.size()),"score",p.getScore());
     }
     
 }

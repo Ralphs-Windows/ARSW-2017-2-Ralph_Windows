@@ -62,7 +62,7 @@ public class RalphWindowsService {
     }
     
     public int getSalaDisponible() throws RalphWindowsPersistenceException {
-        juegoredis.getSalaDisponible();
+        //juegoredis.getSalaDisponible();
         return ralphpersistence.getSalaDisponible();
     }
     
